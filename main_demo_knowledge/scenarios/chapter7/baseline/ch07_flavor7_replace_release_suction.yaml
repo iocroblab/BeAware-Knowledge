@@ -1,0 +1,15 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 7 (ReplaceAbyB) isolated,
+# targets ReleaseObject (isFlavorOf: b_release_object), not Place directly,
+# since OpenGripper is a child of ReleaseObject's own SubTree rather than of
+# Place's top-level Sequence. See ../README.md.
+
+individuals:
+
+  - name: flavor_replace_open_gripper_with_deactivate_suction
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace OpenGripper with DeactivateSuction inside ReleaseObject (Place) when the acting robot has a SuctionGripper (e.g. madar), since a vacuum end-effector releases objects by deactivating suction rather than opening a parallel-jaw gripper."
+      isFlavorOf: b_release_object
+      hasTargetBehaviorA: p_open_gripper
+      hasTargetBehaviorB: p_deactivate_suction
+      hasTrigger: "ASK WHERE { <robot> onto:hasGripper ?g . ?g rdf:type onto:SuctionGripper }"

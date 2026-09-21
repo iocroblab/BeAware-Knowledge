@@ -1,0 +1,95 @@
+# Ch05 Knowledge Base Loading and Scaling: Large ontology-size variant,
+# layered on top of main_demo_medium_expanded_ontology.yaml. See ../README.md.
+
+individuals:
+
+  # --- New world structure: an extra pantry Location with two Surfaces -----------
+
+  - name: pantry
+    individual_classes: ["Location"]
+    property_dictionary:
+      locationInRoom: kitchen
+
+  - name: pantry_left
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: pantry
+
+  - name: pantry_right
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: pantry
+
+  # --- New manipulable objects, reusing existing Glass/Knife/Can classes ----------
+
+  - name: glass4
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: pantry_left
+      hasMaterial: glass
+      hasWeight: 0.29
+      hasColor: clear
+      hasVolume: 0.27
+
+  - name: glass5
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: pantry_right
+      hasMaterial: glass
+      hasWeight: 0.33
+      hasColor: green
+      hasVolume: 0.31
+
+  - name: glass6
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: pantry_left
+      hasMaterial: glass
+      hasWeight: 0.31
+      hasColor: tinted
+      hasVolume: 0.29
+
+  - name: knife4
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: pantry_left
+      hasWeight: 0.16
+      hasColor: black
+
+  - name: knife5
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: pantry_right
+      hasWeight: 0.19
+      hasColor: silver
+
+  - name: knife6
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: pantry_right
+      hasWeight: 0.17
+      hasColor: red
+
+  - name: can4
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: pantry_left
+      hasWeight: 0.36
+      hasColor: yellow
+      hasVolume: 0.33
+
+  - name: can5
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: pantry_right
+      hasWeight: 0.38
+      hasColor: white
+      hasVolume: 0.33
+
+  - name: can6
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: pantry_right
+      hasWeight: 0.31
+      hasColor: black
+      hasVolume: 0.32

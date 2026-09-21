@@ -1,0 +1,71 @@
+# Ch05 Knowledge Base Loading and Scaling: Medium ontology-size variant. See
+# ../README.md.
+
+individuals:
+
+  # --- New world structure: an extra counter Location with two Surfaces -----------
+
+  - name: counter
+    individual_classes: ["Location"]
+    property_dictionary:
+      locationInRoom: kitchen
+
+  - name: counter_left
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: counter
+
+  - name: counter_right
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: counter
+
+  # --- New manipulable objects, reusing existing Glass/Knife/Can classes ----------
+
+  - name: glass2
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: counter_left
+      hasMaterial: glass
+      hasWeight: 0.28
+      hasColor: clear
+      hasVolume: 0.25
+
+  - name: glass3
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: counter_right
+      hasMaterial: glass
+      hasWeight: 0.32
+      hasColor: tinted
+      hasVolume: 0.3
+
+  - name: knife2
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: counter_left
+      hasWeight: 0.18
+      hasColor: black
+
+  - name: knife3
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: counter_right
+      hasWeight: 0.14
+      hasColor: silver
+
+  - name: can2
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: counter_left
+      hasWeight: 0.37
+      hasColor: green
+      hasVolume: 0.33
+
+  - name: can3
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: counter_right
+      hasWeight: 0.34
+      hasColor: blue
+      hasVolume: 0.33

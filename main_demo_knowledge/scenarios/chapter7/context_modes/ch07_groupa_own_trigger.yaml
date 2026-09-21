@@ -1,0 +1,23 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group A (dangerous object,
+# SPARQL) alone, own-Trigger arm. Requires ch07_extra_pick_behaviors.yaml.
+# See ../README.md.
+
+individuals:
+
+  - name: flavor_qr2_a1_dangerous_object_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group A (SPARQL/DangerousObject) 1/2, alone: reduce Pick's velocity when the object is a DangerousObject."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  - name: flavor_qr2_a2_dangerous_object_lift_restriction
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group A (SPARQL/DangerousObject) 2/2, alone: keep a DangerousObject upright while LiftObject is executed."
+      isFlavorOf: b_lift_object
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"

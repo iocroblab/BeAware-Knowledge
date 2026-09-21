@@ -1,0 +1,80 @@
+# Ch07 Context Mode Query-Reduction Scaling: own-Trigger arm, N=6 Flavors (3
+# groups of 2, all attached to b_pick). Each Flavor carries its own full copy
+# of its group's condition as a plain SPARQL hasTrigger; no Context Mode is
+# involved in this arm at all. Requires ch07_extra_pick_behaviors.yaml. See
+# ../README.md.
+#
+# Group B's Flavors are attached to b_pick rather than b_navigate, and
+# tiago's hasBattery / world_state's operatorPresent are overridden below, so
+# a single Pick task-plan step exercises all 3 groups.
+
+individuals:
+
+  - name: tiago
+    individual_classes: ["Robot"]
+    clear_properties:
+      - hasBattery
+    property_dictionary:
+      hasBattery: 40.0
+
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true
+
+  # --- Group A (SPARQL mechanism): manipulated object is a DangerousObject ---
+  - name: flavor_qr2_a1_dangerous_object_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group A (SPARQL/DangerousObject) 1/2: reduce Pick's velocity when the object is a DangerousObject."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  - name: flavor_qr2_a2_dangerous_object_lift_restriction
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group A (SPARQL/DangerousObject) 2/2: keep a DangerousObject upright while LiftObject is executed."
+      isFlavorOf: b_lift_object
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  # --- Group B (ontology-state/SWRL mechanism): robot hasBattery < 65 ---
+  - name: flavor_qr2_b1_low_battery_reserve
+    individual_classes: ["FixParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group B (ontology-state/SWRL/low battery) 1/2: raise the minimum battery reserve threshold kept during Pick."
+      isFlavorOf: b_pick
+      hasParamTarget: battery_reserve_threshold
+      hasNewValue: "15.0"
+      hasTrigger: "ASK WHERE { <robot> onto:hasBattery ?lvl . FILTER(?lvl < 65) }"
+
+  - name: flavor_qr2_b2_low_battery_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group B (ontology-state/SWRL/low battery) 2/2: reduce Pick's velocity by 20% to conserve energy when the acting robot's battery is low."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -20
+      hasTrigger: "ASK WHERE { <robot> onto:hasBattery ?lvl . FILTER(?lvl < 65) }"
+
+  # --- Group C (Expected-PDDL-State mechanism): operatorPresent world_state predicate ---
+  - name: flavor_qr2_c1_skip_detect_operator_present
+    individual_classes: ["Ignore"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group C (Expected-PDDL-State/operatorPresent) 1/2: skip DetectObject when a human operator is present."
+      isFlavorOf: b_pick
+      hasTargetBehavior: b_detect_object
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"
+
+  - name: flavor_qr2_c2_operator_present_slow_grasp
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group C (Expected-PDDL-State/operatorPresent) 2/2: reduce Pick's velocity by 20% for extra caution when a human operator is present."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -20
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"

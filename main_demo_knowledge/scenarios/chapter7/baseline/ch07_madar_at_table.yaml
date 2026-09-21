@@ -1,0 +1,13 @@
+# Ch07 Baseline Flavor-Configuration Timing: relocates madar to
+# table/table_top so it can Pick/Place the same objects used by the other
+# Flavor tests. clear_properties is required since updates otherwise only
+# append. See ../README.md.
+
+individuals:
+
+  - name: madar
+    individual_classes: ["MobileRobot"]
+    clear_properties: ["robotAtLocation", "robotAtSurface"]
+    property_dictionary:
+      robotAtLocation: table
+      robotAtSurface: table_top

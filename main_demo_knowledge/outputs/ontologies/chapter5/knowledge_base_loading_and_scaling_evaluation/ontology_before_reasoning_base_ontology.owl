@@ -1,0 +1,1197 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.semanticweb.org/oriol.ruiz/ontologies/2026/8/main_demo_ontology"
+         xmlns="http://www.semanticweb.org/oriol.ruiz/ontologies/2026/8/main_demo_ontology#"
+         xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+         xmlns:beaw="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#">
+
+<owl:Ontology rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2026/8/main_demo_ontology">
+  <owl:imports rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Main Demo scenario ontology for the BeAware Framework. Base pass: world structure (Room/Location/Surface), Navigate/Move/Pick/Place behaviors. Flavors, Context Modes and MRS to be added in later passes.</rdfs:comment>
+</owl:Ontology>
+
+<owl:ObjectProperty rdf:about="#ApplicationProperties">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parent property for relations used only by the application, not planned over in PDDL</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#PDDLProperties">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Parent property for all PDDL predicates in this scenario</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasGripper">
+  <rdfs:subPropertyOf rdf:resource="#ApplicationProperties"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="#Gripper"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only relation (not planned over, not part of the PDDL knowledge): the end-effector fitted on this Robot</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#hasSensor">
+  <rdfs:subPropertyOf rdf:resource="#ApplicationProperties"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="#Sensor"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only relation (not planned over, not part of the PDDL knowledge): a perception device fitted on this Robot</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#locationInRoom">
+  <rdfs:subPropertyOf rdf:resource="#ApplicationProperties"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Location"/>
+  <rdfs:range rdf:resource="#Room"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only relation (not planned over): this Location belongs to this Room</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#objectOnSurface">
+  <rdfs:subPropertyOf rdf:resource="#PDDLProperties"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="#Surface"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PDDL predicate: object is currently placed on this Surface</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#robotAtLocation">
+  <rdfs:subPropertyOf rdf:resource="#PDDLProperties"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="#Location"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PDDL predicate: robot's base is currently at this Location (changed by Navigate)</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#robotAtSurface">
+  <rdfs:subPropertyOf rdf:resource="#PDDLProperties"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="#Surface"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PDDL predicate: robot's arm is currently reaching this Surface, within the current Location (changed by Move)</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#robotHolding">
+  <rdfs:subPropertyOf rdf:resource="#PDDLProperties"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="#ManipulationObject"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PDDL predicate: robot is currently holding this object</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#surfaceInLocation">
+  <rdfs:subPropertyOf rdf:resource="#PDDLProperties"/>
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="#Location"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PDDL predicate (static): this Surface belongs to this Location</rdfs:comment>
+</owl:ObjectProperty>
+
+<owl:DatatypeProperty rdf:about="#graspForce">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: current measured grasp force reading from the wrist force/torque sensor, in Newtons. Used for documentation purposes by the MRS Flavors that monitor grasp force (`p_check_grasp_force`); not read by any real BT node since ch08's correctness checks are structural-BT-generation-only.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#gripForce">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: current commanded parallel-gripper closing force set-point, in Newtons. Documents the value adapted by the `ParameterAdaptiveRetry` MRS Flavor's inline Script (`hasParameterModification`) between retries; the actual adaptation happens on a BT blackboard variable, not by writing back to this ontology property.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#handEmpty">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PDDL predicate: robot's gripper/hand is free</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBBoxMaxX">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: maximum X coordinate of this Surface's axis-aligned bounding box, in the world frame, in meters.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBBoxMaxY">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: maximum Y coordinate of this Surface's axis-aligned bounding box, in the world frame, in meters.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBBoxMaxZ">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: maximum Z coordinate of this Surface's axis-aligned bounding box, in the world frame, in meters.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBBoxMinX">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: minimum X coordinate of this Surface's axis-aligned bounding box, in the world frame, in meters.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBBoxMinY">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: minimum Y coordinate of this Surface's axis-aligned bounding box, in the world frame, in meters.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBBoxMinZ">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Surface"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: minimum Z coordinate of this Surface's axis-aligned bounding box, in the world frame, in meters.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasBattery">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Robot's current battery level (0-100). Numeric PDDL fluent; the planner may not support numeric fluents, in which case this stays ontology-only.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasColor">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: object color</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasFixedEndEffector">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True when the Robot has a single, non-interchangeable end-effector (its one hasGripper never needs to be selected among alternatives). Asserted directly per Robot, since it reflects a fixed hardware configuration rather than a dynamic runtime condition.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasLowBattery">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">True when the value of hasBattery for the Robot is below 65. Modeled as a boolean data property rather than a class because hasBattery changes continuously during execution. Inferred by SWRL rule rule_low_battery_robot: Robot(?x) ^ hasBattery(?x,?b) ^ swrlb:lessThan(?b,65.0) -&gt; hasLowBattery(?x,true).</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMaterial">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, used as the basis of the FragileObject SWRL rule</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasMaxPayload">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Gripper"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: maximum payload the Gripper can carry, in kilograms</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPositionX">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: object position along the world-frame X axis, in meters. Used by the geometric state reasoner and by the geometric SWRL rule to derive objectOnSurface from raw coordinates instead of a manually asserted fact.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPositionY">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: object position along the world-frame Y axis, in meters. See hasPositionX.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasPositionZ">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: object position along the world-frame Z axis, in meters. See hasPositionX.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasRange">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#Sensor"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: effective sensing range of the Sensor, in meters</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasVolume">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: object volume in liters</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#hasWeight">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="#ManipulationObject"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: object weight in kilograms</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#operatorPresent">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zero-parameter PDDL predicate: set on the world_state individual, not tied to any single Robot/Location/Surface</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="#vacuumPressure">
+  <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+  <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only property, not part of the PDDL knowledge: current measured suction vacuum pressure reading, in kPa. Used for documentation purposes by the MRS Flavors that monitor vacuum pressure (`p_check_vacuum_pressure`); not read by any real BT node since ch08's correctness checks are structural-BT-generation-only.</rdfs:comment>
+</owl:DatatypeProperty>
+
+<owl:Class rdf:about="#Gripper">
+  <rdfs:subClassOf rdf:resource="#RobotComponent"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A Robot's end-effector</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Sensor">
+  <rdfs:subClassOf rdf:resource="#RobotComponent"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A Robot's perception device</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Location">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A fixed feature of the Room the robot can Navigate to (e.g. fridge, sink, cupboard, table)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Room">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Top-level container for the scenario world (e.g. the kitchen)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ManipulationObject">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Generic manipulable object type, matches PDDL type manipulation_object</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Surface">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A placement target within a Location (e.g. fridge_top_shelf, table_top)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Can">
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DangerousObject">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Objects that require extra care during manipulation (e.g. Knife); used as a Flavor trigger target</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ForceTorqueSensor">
+  <rdfs:subClassOf rdf:resource="#Sensor"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wrist-mounted force/torque sensor used to monitor grasp force during manipulation (fitted on tiago); added for ch08's grasp-force-monitoring MRS Flavors.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#FragileObject">
+  <owl:equivalentClass>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasMaterial"/>
+      <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">glass</owl:hasValue>
+    </owl:Restriction>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Inferred via OWL equivalentClass/hasValue restriction from hasMaterial=glass (SWRL was tried first but Pellet does not apply it in this environment); used as a Flavor trigger target</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Glass">
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RobotComponent">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Application-only concept, not part of the PDDL knowledge: parent class for hardware components fitted on a Robot (grippers, sensors)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#HeavyObject">
+  <rdfs:subClassOf rdf:resource="#DangerousObject"/>
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Manipulation object whose hasWeight exceeds 0.3 kg. Inferred by SWRL rule rule_heavy_object: ManipulationObject(?x) ^ hasWeight(?x,?w) ^ swrlb:greaterThan(?w,0.3) -&gt; HeavyObject(?x). Also DangerousObject (a heavy object requires extra care during manipulation just like Knife); this is what lets glass2 (Fragile + Heavy) also count as Dangerous for the all_activation experiment tag.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#Knife">
+  <rdfs:subClassOf rdf:resource="#DangerousObject"/>
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LiquidContainer">
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Manipulation object capable of holding liquid (e.g. glass1, glass2); asserted directly (not inferred), used as a Ch07 showcase Flavor trigger target (AddKinematicRestriction: keep upright while lifting).</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ManipulationBehavior">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasFlavor"/>
+      <owl:hasValue rdf:resource="#flavor_reduce_velocity_for_manipulation"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ch07 Flavor Inheritance example: any Behavior asserted as a ManipulationBehavior
+        automatically inherits flavor_reduce_velocity_for_manipulation via this hasValue restriction
+        (the reasoner infers the hasFlavor/isFlavorOf triples, no isFlavorOf needed on the flavor itself).
+        Empty until a variant types individuals (e.g. b_pick, b_place) as ManipulationBehavior and
+        supplies the target flavor individual; see additional_knowledge_yamls/main_demo_flavors.yaml.</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#MobileRobot">
+  <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdfs:subClassOf>
+    <owl:Restriction>
+      <owl:onProperty rdf:resource="#hasBattery"/>
+      <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    </owl:Restriction>
+  </rdfs:subClassOf>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Robots capable of self-locomotion and therefore battery-powered (e.g. madar, tiago); used as a Flavor/MRS Trigger target for battery-related checks (ch08 mrs_pick_shared_battery_precondition).</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#NeedsCarefulHandling">
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fragile object whose hasWeight also exceeds 0.3 kg, combining two Application properties (hasMaterial-derived FragileObject and hasWeight) into a second-order fact. Inferred by SWRL rule rule_needs_careful_handling: FragileObject(?x) ^ hasWeight(?x,?w) ^ swrlb:greaterThan(?w,0.3) -&gt; NeedsCarefulHandling(?x).</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ParallelGripper">
+  <rdfs:subClassOf rdf:resource="#Gripper"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Two-finger parallel-jaw end-effector (fitted on tiago)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#ProximitySensor">
+  <rdfs:subClassOf rdf:resource="#Sensor"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Range-based proximity sensor used for navigation and object detection (fitted on madar)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#RGBDCamera">
+  <rdfs:subClassOf rdf:resource="#Sensor"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Colour and depth camera used for object detection (fitted on tiago)</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#SmallObject">
+  <rdfs:subClassOf rdf:resource="#ManipulationObject"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Manipulation object small enough that a full DetectObject scan is unnecessary overhead; asserted directly (not inferred), used as a Ch07 showcase Flavor trigger target (Ignore: skip the LocalizeObject branch of DetectObject's Fallback, forcing ScanWorld).</rdfs:comment>
+</owl:Class>
+
+<owl:Class rdf:about="#SuctionGripper">
+  <rdfs:subClassOf rdf:resource="#Gripper"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vacuum-cup end-effector (fitted on madar)</rdfs:comment>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#flavor_reduce_velocity_for_manipulation">
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Placeholder Flavor individual for the ManipulationBehavior class; Chapter 7 Flavor Inheritance example, not yet linked to any Behavior.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#world_state">
+  <operatorPresent rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</operatorPresent>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_attempt_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AttemptGrasp</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sequence orchestrating a full grasp attempt (open gripper, determine grasp, approach, close gripper).</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_battery_reserve">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckBatteryReserve</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Checks that the battery reserve is sufficient before Navigate.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_detection_confidence">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckDetectionConfidence</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Checks that object detection confidence is high enough to proceed.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_grasp_force">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckGraspForce</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monitors the measured grasp force during a Pick.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_gripper_ready">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckGripperReady</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_object_on_expected_surface">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckObjectOnExpectedSurface</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Verifies the object is on the Surface expected by the plan.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_object_stable_on_surface">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckObjectStableOnSurface</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Verifies the placed object remains stable on its Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_check_vacuum_pressure">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CheckVacuumPressure</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monitors the measured suction vacuum pressure during a suction grasp.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_confirm_tool_selection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ConfirmToolSelection</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_detect_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DetectObject</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fallback that localizes, or otherwise scans the world for, the target object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_determine_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DetermineGrasp</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Computes a grasp and pregrasp pose for the target object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_determine_placement">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DeterminePlacement</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Computes a placement pose on the target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_drive_to_location">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DriveToLocation</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drives the robot base along the planned path.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_go_to_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GoToGrasp</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Moves the arm to the computed grasp pose.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_go_to_placement">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GoToPlacement</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_go_to_pregrasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GoToPregrasp</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Moves the arm to the computed pregrasp pose.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_grasp_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GraspObject</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Closes the gripper on the target object with the default grip force.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_grasp_object_reinforced">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GraspObjectReinforced</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_grasp_object_suction">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GraspObjectSuction</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Activates suction on the target object; swapped in for b_grasp_object on SuctionGripper robots (madar).</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_lift_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">LiftObject</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lifts the grasped object clear of the source Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_localize_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">LocalizeObject</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_move">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#PlanLevelBehavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Move</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plan-Level Behavior for the PDDL action `move`; moves the arm to reach a target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_move_arm_to_surface">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MoveArmToSurface</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Moves the arm along the planned trajectory to reach the target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_navigate">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#PlanLevelBehavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Navigate</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plan-Level Behavior for the PDDL action `navigate`; drives the robot base between Locations.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_operator_confirm_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">OperatorConfirmGrasp</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_pick">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#PlanLevelBehavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pick</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plan-Level Behavior for the PDDL action `pick`; grasps an object from a Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_place">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#PlanLevelBehavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Place</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plan-Level Behavior for the PDDL action `place`; releases the held object onto a Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_plan_arm_trajectory">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PlanArmTrajectory</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plans an arm trajectory to reach a target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_plan_path">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PlanPath</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plans a navigation path between two Locations.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_regrasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Regrasp</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Recovery Behavior that repeats the grasp attempt after a failure.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_release_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ReleaseObject</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Opens the gripper to release the held object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_replan_alternate_path">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ReplanAlternatePath</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Recovery Behavior computing an alternate path around an obstacle.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_reposition">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reposition</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Recovery Behavior that repositions the robot.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_reposition_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RepositionObject</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Recovery Behavior that repositions a misplaced object on its Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_request_operator_assistance">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RequestOperatorAssistance</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Terminal recovery Behavior requesting help from a human operator.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_retreat_arm">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">RetreatArm</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Retracts the arm to a safe pose after placing the object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_scan_world">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ScanWorld</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_select_tool">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SelectTool</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Selects the end-effector or grasp strategy for the target object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_signal_grasp_failure">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SignalGraspFailure</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Terminal recovery Behavior that reports a failed grasp attempt.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_tighten_grip">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">TightenGrip</beaw:hasBTid>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Recovery Behavior that increases grip force after a low grasp-force reading.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#b_verify_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+  <beaw:hasBTid rdf:datatype="http://www.w3.org/2001/XMLSchema#string">VerifyGrasp</beaw:hasBTid>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#bolt1">
+  <rdf:type rdf:resource="#ManipulationObject"/>
+  <rdf:type rdf:resource="#SmallObject"/>
+  <objectOnSurface rdf:resource="#table_top"/>
+  <hasColor rdf:datatype="http://www.w3.org/2001/XMLSchema#string">silver</hasColor>
+  <hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.02</hasVolume>
+  <hasWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.05</hasWeight>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Silver, 0.02 L, 0.05 kg; Chapter 7 showcase Flavor target.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#table_top">
+  <rdf:type rdf:resource="#Surface"/>
+  <surfaceInLocation rdf:resource="#table"/>
+  <hasBBoxMaxX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.9</hasBBoxMaxX>
+  <hasBBoxMaxY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</hasBBoxMaxY>
+  <hasBBoxMaxZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.8</hasBBoxMaxZ>
+  <hasBBoxMinX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</hasBBoxMinX>
+  <hasBBoxMinY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.3</hasBBoxMinY>
+  <hasBBoxMinZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.75</hasBBoxMinZ>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In table.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#can1">
+  <rdf:type rdf:resource="#Can"/>
+  <rdf:type rdf:resource="#ManipulationObject"/>
+  <objectOnSurface rdf:resource="#table_top"/>
+  <hasColor rdf:datatype="http://www.w3.org/2001/XMLSchema#string">red</hasColor>
+  <hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.33</hasVolume>
+  <hasWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.35</hasWeight>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Red, 0.33 L, 0.35 kg (inferred HeavyObject, DangerousObject).</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cupboard">
+  <rdf:type rdf:resource="#Location"/>
+  <locationInRoom rdf:resource="#kitchen"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In kitchen.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#kitchen">
+  <rdf:type rdf:resource="#Room"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Top-level container for the scenario world.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cupboard_bottom_shelf">
+  <rdf:type rdf:resource="#Surface"/>
+  <surfaceInLocation rdf:resource="#cupboard"/>
+  <hasBBoxMaxX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.5</hasBBoxMaxX>
+  <hasBBoxMaxY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.25</hasBBoxMaxY>
+  <hasBBoxMaxZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.35</hasBBoxMaxZ>
+  <hasBBoxMinX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</hasBBoxMinX>
+  <hasBBoxMinY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.25</hasBBoxMinY>
+  <hasBBoxMinZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</hasBBoxMinZ>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In cupboard.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cupboard_top_shelf">
+  <rdf:type rdf:resource="#Surface"/>
+  <surfaceInLocation rdf:resource="#cupboard"/>
+  <hasBBoxMaxX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.5</hasBBoxMaxX>
+  <hasBBoxMaxY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.25</hasBBoxMaxY>
+  <hasBBoxMaxZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.55</hasBBoxMaxZ>
+  <hasBBoxMinX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.0</hasBBoxMinX>
+  <hasBBoxMinY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.25</hasBBoxMinY>
+  <hasBBoxMinZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.5</hasBBoxMinZ>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In cupboard.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#fridge">
+  <rdf:type rdf:resource="#Location"/>
+  <locationInRoom rdf:resource="#kitchen"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In kitchen.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#fridge_door_rack">
+  <rdf:type rdf:resource="#Surface"/>
+  <surfaceInLocation rdf:resource="#fridge"/>
+  <hasBBoxMaxX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-1.2</hasBBoxMaxX>
+  <hasBBoxMaxY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.2</hasBBoxMaxY>
+  <hasBBoxMaxZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.95</hasBBoxMaxZ>
+  <hasBBoxMinX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-1.35</hasBBoxMinX>
+  <hasBBoxMinY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.2</hasBBoxMinY>
+  <hasBBoxMinZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.9</hasBBoxMinZ>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In fridge.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#fridge_top_shelf">
+  <rdf:type rdf:resource="#Surface"/>
+  <surfaceInLocation rdf:resource="#fridge"/>
+  <hasBBoxMaxX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.8</hasBBoxMaxX>
+  <hasBBoxMaxY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.25</hasBBoxMaxY>
+  <hasBBoxMaxZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.35</hasBBoxMaxZ>
+  <hasBBoxMinX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-1.2</hasBBoxMinX>
+  <hasBBoxMinY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.25</hasBBoxMinY>
+  <hasBBoxMinZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.3</hasBBoxMinZ>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In fridge.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#glass1">
+  <rdf:type rdf:resource="#Glass"/>
+  <rdf:type rdf:resource="#LiquidContainer"/>
+  <objectOnSurface rdf:resource="#table_top"/>
+  <hasColor rdf:datatype="http://www.w3.org/2001/XMLSchema#string">clear</hasColor>
+  <hasMaterial rdf:datatype="http://www.w3.org/2001/XMLSchema#string">glass</hasMaterial>
+  <hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</hasVolume>
+  <hasWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</hasWeight>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Clear, glass material (inferred FragileObject), 0.3 L, 0.3 kg.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#glass2">
+  <rdf:type rdf:resource="#Glass"/>
+  <rdf:type rdf:resource="#LiquidContainer"/>
+  <rdf:type rdf:resource="#SmallObject"/>
+  <objectOnSurface rdf:resource="#table_top"/>
+  <hasColor rdf:datatype="http://www.w3.org/2001/XMLSchema#string">frosted</hasColor>
+  <hasMaterial rdf:datatype="http://www.w3.org/2001/XMLSchema#string">glass</hasMaterial>
+  <hasVolume rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.4</hasVolume>
+  <hasWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.5</hasWeight>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Frosted, glass material, 0.4 L, 0.5 kg (inferred FragileObject, HeavyObject, DangerousObject, NeedsCarefulHandling); Chapter 7 all-Flavor showcase object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#knife1">
+  <rdf:type rdf:resource="#Knife"/>
+  <objectOnSurface rdf:resource="#table_top"/>
+  <hasColor rdf:datatype="http://www.w3.org/2001/XMLSchema#string">silver</hasColor>
+  <hasWeight rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.15</hasWeight>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Silver, 0.15 kg; already DangerousObject by class.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#madar">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdf:type rdf:resource="#MobileRobot"/>
+  <hasGripper rdf:resource="#madar_gripper"/>
+  <hasSensor rdf:resource="#madar_proximity_sensor"/>
+  <robotAtLocation rdf:resource="#cupboard"/>
+  <robotAtSurface rdf:resource="#cupboard_bottom_shelf"/>
+  <handEmpty rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</handEmpty>
+  <hasBattery rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">60.0</hasBattery>
+  <hasFixedEndEffector rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasFixedEndEffector>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fixed suction-gripper robot; starts at battery 60%, indicating it could still move, at cupboard/cupboard_bottom_shelf, hand empty.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#madar_gripper">
+  <rdf:type rdf:resource="#SuctionGripper"/>
+  <hasMaxPayload rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">1.5</hasMaxPayload>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Max payload 1.5 kg.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#madar_proximity_sensor">
+  <rdf:type rdf:resource="#ProximitySensor"/>
+  <hasRange rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">8.0</hasRange>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Range 8.0 m.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_activate_suction">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Activates the suction cup end-effector on the target object; inside the GraspObjectSuction variant.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_battery_reserve">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reads the battery level and checks it is high enough to complete a Navigate.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_detection_confidence">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reads the perception confidence score for the detected object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_grasp_force">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reads the measured grasp force from the wrist force/torque sensor.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_gripper_ready">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_object_on_expected_surface">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Checks that the object is detected on the Surface expected by the plan.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_object_stable_on_surface">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Checks that the placed object is not moving or falling.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_check_vacuum_pressure">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reads the measured suction vacuum pressure.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_close_gripper">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Closes the parallel gripper on the target object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_close_gripper_reinforced">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_confirm_tool_selection">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_detect_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Placeholder for the DetectObject Behavior (a composite Fallback over LocalizeObject/ScanWorld in the BT); not tied to a single Action leaf.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_determine_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Computes a grasp pose and pregrasp pose for the object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_determine_placement">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Computes a placement pose on the target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_drive_base">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drives the robot base along the path to the target Location.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_localize_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_move_arm">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Moves the arm along the planned trajectory to reach the target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_move_arm_to_pose">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Moves the arm to a specific target pose (pregrasp, grasp, lift, placement, retreat).</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_open_gripper">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Opens the gripper, both to prepare for grasping and to release the object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_operator_confirm_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_plan_arm_trajectory">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plans an arm trajectory to reach a target Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_plan_path">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Plans a navigation path between two Locations.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_regrasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Repeats the grasp attempt after a failed grasp.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_replan_alternate_path">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Computes an alternate navigation path around an obstacle; first, non-terminal stage of an escalating recovery.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_reposition">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Repositions the robot base.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_reposition_object">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Repositions a misplaced object on its Surface.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_request_operator_assistance">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <beaw:isTerminal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</beaw:isTerminal>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Requests assistance from a human operator; terminal recovery stage (isTerminal).</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_scan_world">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_select_tool">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Selects the end-effector or grasp strategy for the target object.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_signal_grasp_failure">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <beaw:isTerminal rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</beaw:isTerminal>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reports a failed grasp attempt; terminal recovery (isTerminal).</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_tighten_grip">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Increases the commanded grip force after a low grasp-force reading.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#p_verify_grasp">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#sink">
+  <rdf:type rdf:resource="#Location"/>
+  <locationInRoom rdf:resource="#kitchen"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In kitchen.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#sink_basin">
+  <rdf:type rdf:resource="#Surface"/>
+  <surfaceInLocation rdf:resource="#sink"/>
+  <hasBBoxMaxX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.0</hasBBoxMaxX>
+  <hasBBoxMaxY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.25</hasBBoxMaxY>
+  <hasBBoxMaxZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.9</hasBBoxMaxZ>
+  <hasBBoxMinX rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.4</hasBBoxMinX>
+  <hasBBoxMinY rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">-0.25</hasBBoxMinY>
+  <hasBBoxMinZ rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.85</hasBBoxMinZ>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In sink.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#table">
+  <rdf:type rdf:resource="#Location"/>
+  <locationInRoom rdf:resource="#kitchen"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In kitchen.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiago">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+  <rdf:type rdf:resource="#MobileRobot"/>
+  <hasGripper rdf:resource="#tiago_gripper"/>
+  <hasSensor rdf:resource="#tiago_camera"/>
+  <hasSensor rdf:resource="#tiago_force_sensor"/>
+  <robotAtLocation rdf:resource="#table"/>
+  <robotAtSurface rdf:resource="#table_top"/>
+  <handEmpty rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</handEmpty>
+  <hasBattery rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">85.0</hasBattery>
+  <hasFixedEndEffector rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</hasFixedEndEffector>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fixed parallel-gripper robot; starts at battery 85%, indicating it could still move, at table/table_top, hand empty.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiago_gripper">
+  <rdf:type rdf:resource="#ParallelGripper"/>
+  <hasMaxPayload rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">3.0</hasMaxPayload>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Max payload 3.0 kg.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiago_camera">
+  <rdf:type rdf:resource="#RGBDCamera"/>
+  <hasRange rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">2.5</hasRange>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Range 2.5 m.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#tiago_force_sensor">
+  <rdf:type rdf:resource="#ForceTorqueSensor"/>
+  <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monitors grasp force for the Chapter 8 MRS Flavors.</rdfs:comment>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#world_state">
+  <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#WorldState"/>
+  <operatorPresent rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</operatorPresent>
+</owl:NamedIndividual>
+
+<swrl:Variable rdf:about="urn:swrl#x"/>
+
+<swrl:Variable rdf:about="urn:swrl#b"/>
+
+<swrl:Variable rdf:about="urn:swrl#w"/>
+
+<swrl:Imp>
+  <swrl:body>
+    <swrl:AtomList>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#ManipulationObject"/>
+          <swrl:argument1 rdf:resource="urn:swrl#x"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest>
+        <swrl:AtomList>
+          <rdf:first>
+            <swrl:DatavaluedPropertyAtom>
+              <swrl:propertyPredicate rdf:resource="#hasWeight"/>
+              <swrl:argument1 rdf:resource="urn:swrl#x"/>
+              <swrl:argument2 rdf:resource="urn:swrl#w"/>
+            </swrl:DatavaluedPropertyAtom>
+          </rdf:first>
+          <rdf:rest>
+            <swrl:AtomList>
+              <rdf:first>
+                <swrl:BuiltinAtom>
+                  <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThan"/>
+                  <swrl:arguments>
+                    <rdf:List>
+                      <rdf:first rdf:resource="urn:swrl#w"/>
+                      <rdf:rest>
+                        <rdf:List>
+                          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</rdf:first>
+                        </rdf:List>
+                      </rdf:rest>
+                    </rdf:List>
+                  </swrl:arguments>
+                </swrl:BuiltinAtom>
+              </rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </swrl:AtomList>
+          </rdf:rest>
+        </swrl:AtomList>
+      </rdf:rest>
+    </swrl:AtomList>
+  </swrl:body>
+  <swrl:head>
+    <swrl:AtomList>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#HeavyObject"/>
+          <swrl:argument1 rdf:resource="urn:swrl#x"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </swrl:AtomList>
+  </swrl:head>
+</swrl:Imp>
+
+<swrl:Imp>
+  <swrl:body>
+    <swrl:AtomList>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#FragileObject"/>
+          <swrl:argument1 rdf:resource="urn:swrl#x"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest>
+        <swrl:AtomList>
+          <rdf:first>
+            <swrl:DatavaluedPropertyAtom>
+              <swrl:propertyPredicate rdf:resource="#hasWeight"/>
+              <swrl:argument1 rdf:resource="urn:swrl#x"/>
+              <swrl:argument2 rdf:resource="urn:swrl#w"/>
+            </swrl:DatavaluedPropertyAtom>
+          </rdf:first>
+          <rdf:rest>
+            <swrl:AtomList>
+              <rdf:first>
+                <swrl:BuiltinAtom>
+                  <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#greaterThan"/>
+                  <swrl:arguments>
+                    <rdf:List>
+                      <rdf:first rdf:resource="urn:swrl#w"/>
+                      <rdf:rest>
+                        <rdf:List>
+                          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">0.3</rdf:first>
+                        </rdf:List>
+                      </rdf:rest>
+                    </rdf:List>
+                  </swrl:arguments>
+                </swrl:BuiltinAtom>
+              </rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </swrl:AtomList>
+          </rdf:rest>
+        </swrl:AtomList>
+      </rdf:rest>
+    </swrl:AtomList>
+  </swrl:body>
+  <swrl:head>
+    <swrl:AtomList>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#NeedsCarefulHandling"/>
+          <swrl:argument1 rdf:resource="urn:swrl#x"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </swrl:AtomList>
+  </swrl:head>
+</swrl:Imp>
+
+<swrl:Imp>
+  <swrl:body>
+    <swrl:AtomList>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot"/>
+          <swrl:argument1 rdf:resource="urn:swrl#x"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest>
+        <swrl:AtomList>
+          <rdf:first>
+            <swrl:DatavaluedPropertyAtom>
+              <swrl:propertyPredicate rdf:resource="#hasBattery"/>
+              <swrl:argument1 rdf:resource="urn:swrl#x"/>
+              <swrl:argument2 rdf:resource="urn:swrl#b"/>
+            </swrl:DatavaluedPropertyAtom>
+          </rdf:first>
+          <rdf:rest>
+            <swrl:AtomList>
+              <rdf:first>
+                <swrl:BuiltinAtom>
+                  <swrl:builtin rdf:resource="http://www.w3.org/2003/11/swrlb#lessThan"/>
+                  <swrl:arguments>
+                    <rdf:List>
+                      <rdf:first rdf:resource="urn:swrl#b"/>
+                      <rdf:rest>
+                        <rdf:List>
+                          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                          <rdf:first rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">65.0</rdf:first>
+                        </rdf:List>
+                      </rdf:rest>
+                    </rdf:List>
+                  </swrl:arguments>
+                </swrl:BuiltinAtom>
+              </rdf:first>
+              <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </swrl:AtomList>
+          </rdf:rest>
+        </swrl:AtomList>
+      </rdf:rest>
+    </swrl:AtomList>
+  </swrl:body>
+  <swrl:head>
+    <swrl:AtomList>
+      <rdf:first>
+        <swrl:DatavaluedPropertyAtom>
+          <swrl:propertyPredicate rdf:resource="#hasLowBattery"/>
+          <swrl:argument1 rdf:resource="urn:swrl#x"/>
+          <swrl:argument2 rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrl:argument2>
+        </swrl:DatavaluedPropertyAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </swrl:AtomList>
+  </swrl:head>
+</swrl:Imp>
+
+<owl:AllDifferent>
+  <owl:distinctMembers rdf:parseType="Collection">
+    <rdf:Description rdf:about="#can1"/>
+    <rdf:Description rdf:about="#cupboard"/>
+    <rdf:Description rdf:about="#cupboard_bottom_shelf"/>
+    <rdf:Description rdf:about="#cupboard_top_shelf"/>
+    <rdf:Description rdf:about="#fridge"/>
+    <rdf:Description rdf:about="#fridge_door_rack"/>
+    <rdf:Description rdf:about="#fridge_top_shelf"/>
+    <rdf:Description rdf:about="#glass1"/>
+    <rdf:Description rdf:about="#kitchen"/>
+    <rdf:Description rdf:about="#knife1"/>
+    <rdf:Description rdf:about="#madar"/>
+    <rdf:Description rdf:about="#madar_gripper"/>
+    <rdf:Description rdf:about="#madar_proximity_sensor"/>
+    <rdf:Description rdf:about="#sink"/>
+    <rdf:Description rdf:about="#sink_basin"/>
+    <rdf:Description rdf:about="#table"/>
+    <rdf:Description rdf:about="#table_top"/>
+    <rdf:Description rdf:about="#tiago"/>
+    <rdf:Description rdf:about="#tiago_camera"/>
+    <rdf:Description rdf:about="#tiago_gripper"/>
+  </owl:distinctMembers>
+</owl:AllDifferent>
+
+
+</rdf:RDF>

@@ -1,0 +1,14 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 5 (ReplaceByParam)
+# isolated. See ../README.md.
+
+individuals:
+
+  - name: flavor_select_tool_by_material_query
+    individual_classes: ["ReplaceByParam"]
+    property_dictionary:
+      description: "Replace SelectTool inside Pick with a directly-queried grasp-style parameter, resolved from the manipulated object's hasMaterial value (e.g. 'glass' for glass1/glass2), instead of a generic tool-selection step."
+      isFlavorOf: b_pick
+      hasTargetBehavior: b_select_tool
+      replacedByParam: grasp_style_param
+      obtainsParamValuewithQuery: "SELECT ?v WHERE { <object> onto:hasMaterial ?v }"
+      hasTrigger: "ASK WHERE { <object> onto:hasMaterial ?mat }"

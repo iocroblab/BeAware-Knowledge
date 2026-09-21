@@ -1,0 +1,28 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group C alone, Context-Mode-
+# gated arm. Must be loaded alongside ch07_groupc_cm_only.yaml (defines only
+# cm_operator_supervised). See ../README.md.
+
+individuals:
+
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true
+
+  - name: flavor_qr2_c1_skip_detect_operator_present
+    individual_classes: ["Ignore"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group C 1/2, alone: gated by cm_operator_supervised, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_operator_supervised
+      hasTargetBehavior: b_detect_object
+
+  - name: flavor_qr2_c2_operator_present_slow_grasp
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group C 2/2, alone: gated by cm_operator_supervised, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_operator_supervised
+      hasParamTarget: velocity
+      hasPercentageModifier: -20

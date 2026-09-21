@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="Navigate">
+
+    <!-- =============================================== -->
+    <!-- HIGH-LEVEL BEHAVIORS (one per PDDL action) -->
+    <!-- =============================================== -->
+
+    <BehaviorTree ID="Navigate" _pddl_parameters="robot;from;to">
+        <Sequence>
+            <!-- Same rationale as Pick/Place's Setup Parameters: velocity/kinematic_restriction
+            default here so Flavors can modulate/fix them (ModulateParameter, FixParameter,
+            AddKinematicRestriction) before DriveToLocation consumes them. -->
+            <Sequence name="Setup Parameters">
+                <Script code="velocity:=1.0;kinematic_restriction:=none" />
+            </Sequence>
+            <SubTree ID="CheckBatteryReserve" robot="{robot}" />
+            <SubTree ID="PlanPath" robot="{robot}" from="{from}" to="{to}" path="{path}" />
+            <SubTree ID="DriveToLocation" robot="{robot}" from="{from}" to="{to}" path="{path}"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="Move" _pddl_parameters="robot;location;from_surface;to_surface">
+        <Sequence>
+            <!-- Same rationale as Pick/Place's Setup Parameters: velocity/kinematic_restriction
+            default here so Flavors can modulate/fix them (ModulateParameter, FixParameter,
+            AddKinematicRestriction) before MoveArmToSurface consumes them. -->
+            <Sequence name="Setup Parameters">
+                <Script code="velocity:=1.0;kinematic_restriction:=none" />
+            </Sequence>
+            <SubTree ID="PlanArmTrajectory" robot="{robot}" from_surface="{from_surface}"
+                to_surface="{to_surface}" trajectory="{trajectory}" />
+            <SubTree ID="MoveArmToSurface" robot="{robot}" location="{location}"
+                from_surface="{from_surface}" to_surface="{to_surface}" trajectory="{trajectory}"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="Pick" _pddl_parameters="robot;object;location;surface">
+        <Sequence>
+            <!-- Establishes the default values for parameters that Flavors may modulate/override
+            (ModulateParameter for velocity, ReplaceByParam for grasp_style_param). Named "Setup
+            Parameters" so Flavor application (add_to_setup_parameters/add_or_change_parameter_value
+            in flavor_utils.py) finds this Sequence and edits/appends its Script in place instead of
+            wrapping the whole Pick content in an "Auxiliar Parameter Sequence". -->
+            <Sequence name="Setup Parameters">
+                <Script code="velocity:=1.0;grasp_style_param:=none;kinematic_restriction:=none" />
+            </Sequence>
+            <SubTree ID="DetectObject" robot="{robot}" object="{object}"
+                object_pose="{object_pose}" />
+            <SubTree ID="SelectTool" robot="{robot}" object="{object}" />
+            <SubTree ID="ConfirmToolSelection" robot="{robot}" object="{object}" />
+            <SubTree ID="CheckGripperReady" robot="{robot}" />
+            <SubTree ID="AttemptGrasp" robot="{robot}" object="{object}"
+                object_pose="{object_pose}" velocity="{velocity}"
+                grasp_style_param="{grasp_style_param}"
+                kinematic_restriction="{kinematic_restriction}" />
+            <SubTree ID="VerifyGrasp" robot="{robot}" object="{object}" />
+            <SubTree ID="LiftObject" robot="{robot}" object="{object}" velocity="{velocity}"
+                kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="Place" _pddl_parameters="robot;object;location;surface">
+        <Sequence>
+            <!-- Same rationale as Pick's Setup Parameters: velocity/kinematic_restriction default
+            here so every MoveArmToPose Action call (shared with Pick's GoToPregrasp/GoToGrasp/
+            LiftObject) uses a consistent parameter set, as required by the template validator. -->
+            <Sequence name="Setup Parameters">
+                <Script code="velocity:=1.0;kinematic_restriction:=none" />
+            </Sequence>
+            <SubTree ID="DeterminePlacement" robot="{robot}" object="{object}" surface="{surface}"
+                placement_pose="{placement_pose}" />
+            <SubTree ID="GoToPlacement" robot="{robot}" placement_pose="{placement_pose}"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+            <SubTree ID="ReleaseObject" robot="{robot}" object="{object}" surface="{surface}" />
+            <SubTree ID="RetreatArm" robot="{robot}" velocity="{velocity}"
+                kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- =============================================== -->
+    <!-- SUBTREES (sub-behaviors, reusable) -->
+    <!-- =============================================== -->
+
+    <!-- Navigate sub-behaviors -->
+
+    <BehaviorTree ID="CheckBatteryReserve" _inputs="robot">
+        <Sequence>
+            <Action ID="CheckBatteryReserve" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="PlanPath" _inputs="robot;from;to" _outputs="path">
+        <Sequence>
+            <Action ID="PlanPath" robot="{robot}" from="{from}" to="{to}" path="{path}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="DriveToLocation" _inputs="robot;from;to;path;velocity;kinematic_restriction">
+        <Sequence>
+            <Action ID="DriveBase" robot="{robot}" from="{from}" to="{to}" path="{path}"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Move sub-behaviors -->
+
+    <BehaviorTree ID="PlanArmTrajectory" _inputs="robot;from_surface;to_surface"
+        _outputs="trajectory">
+        <Sequence>
+            <Action ID="PlanArmTrajectory" robot="{robot}" from_surface="{from_surface}"
+                to_surface="{to_surface}" trajectory="{trajectory}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="MoveArmToSurface"
+        _inputs="robot;location;from_surface;to_surface;trajectory;velocity;kinematic_restriction">
+        <Sequence>
+            <Action ID="MoveArm" robot="{robot}" from_surface="{from_surface}"
+                to_surface="{to_surface}" trajectory="{trajectory}" velocity="{velocity}"
+                kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Pick sub-behaviors -->
+
+    <!-- A Fallback of two detection strategies: LocalizeObject (default, lightweight) first,
+    ScanWorld (a full environment scan) as the fallback. Flavor 8 (Ignore) marks LocalizeObject as
+    ignored for SmallObjects, forcing a full ScanWorld unconditionally. -->
+    <BehaviorTree ID="DetectObject" _inputs="robot;object" _outputs="object_pose">
+        <Fallback>
+            <SubTree ID="LocalizeObject" robot="{robot}" object="{object}"
+                object_pose="{object_pose}" />
+            <SubTree ID="ScanWorld" robot="{robot}" object="{object}" object_pose="{object_pose}" />
+        </Fallback>
+    </BehaviorTree>
+
+    <BehaviorTree ID="LocalizeObject" _inputs="robot;object" _outputs="object_pose">
+        <Sequence>
+            <Action ID="LocalizeObject" robot="{robot}" object="{object}" pose="{object_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="ScanWorld" _inputs="robot;object" _outputs="object_pose">
+        <Sequence>
+            <Action ID="ScanWorld" robot="{robot}" object="{object}" pose="{object_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="SelectTool" _inputs="robot;object">
+        <Sequence>
+            <Action ID="SelectTool" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="ConfirmToolSelection" _inputs="robot;object">
+        <Sequence>
+            <Action ID="ConfirmToolSelection" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Follows ConfirmToolSelection by default; ARedundantwithB flavors can turn the pair into a
+    Fallback (ConfirmToolSelection ? CheckGripperReady) when the extra confirmation step is
+    unnecessary (e.g. a SuctionGripper doesn't need a human-style tool check, a lightweight
+    readiness check is enough). Deliberately does not share SelectTool as a pivot with the
+    DetectObject/SelectTool SequenceModifier pair, so the two SequenceModifier Flavors can both fire
+    without conflicting over adjacency. -->
+    <BehaviorTree ID="CheckGripperReady" _inputs="robot">
+        <Sequence>
+            <Action ID="CheckGripperReady" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- OpenGripper runs here, before GoToPregrasp/GoToGrasp: if the gripper is still closed
+    while moving toward the grasp pose, it will collide with/touch the object prematurely. -->
+    <BehaviorTree ID="AttemptGrasp"
+        _inputs="robot;object;object_pose;velocity;grasp_style_param;kinematic_restriction">
+        <Sequence>
+            <Action ID="OpenGripper" robot="{robot}" />
+            <SubTree ID="DetermineGrasp" robot="{robot}" object="{object}"
+                object_pose="{object_pose}" grasp_style_param="{grasp_style_param}"
+                grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}" />
+            <SubTree ID="GoToPregrasp" robot="{robot}" pregrasp_pose="{pregrasp_pose}"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+            <SubTree ID="GoToGrasp" robot="{robot}" grasp_pose="{grasp_pose}" velocity="{velocity}"
+                kinematic_restriction="{kinematic_restriction}" />
+            <SubTree ID="GraspObject" robot="{robot}" object="{object}"
+                object_pose="{object_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="DetermineGrasp" _inputs="robot;object;object_pose;grasp_style_param"
+        _outputs="grasp_pose;pregrasp_pose">
+        <Sequence>
+            <Action ID="DetermineGrasp" robot="{robot}" object="{object}"
+                object_pose="{object_pose}" grasp_style_param="{grasp_style_param}"
+                grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="GoToPregrasp" _inputs="robot;pregrasp_pose;velocity;kinematic_restriction">
+        <Sequence>
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{pregrasp_pose}" offset="none"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="GoToGrasp" _inputs="robot;grasp_pose;velocity;kinematic_restriction">
+        <Sequence>
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{grasp_pose}" offset="none"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Own "Setup Parameters" Sequence (same rationale as Pick's, see above) so Flavors that
+    fix/modulate max_grip_force edit this Script in place instead of wrapping GraspObject's content
+    in an "Auxiliar Parameter Sequence". Kept local to GraspObject/GraspObjectReinforced rather than
+    threaded through Pick/AttemptGrasp as an input, so the parameter only appears within this
+    sub-Behavior. Default is lower than GraspObjectReinforced's, reflecting the firmer grip of the
+    reinforced variant. -->
+    <BehaviorTree ID="GraspObject" _inputs="robot;object;object_pose">
+        <Sequence>
+            <Sequence name="Setup Parameters">
+                <Script code="max_grip_force:=40.0" />
+            </Sequence>
+            <Action ID="CloseGripper" robot="{robot}" object="{object}" pose="{object_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- ReplaceAbyB alternative to GraspObject: a firmer close for HeavyObjects. Own default
+    max_grip_force is higher than GraspObject's, reflecting the firmer grip of this variant. -->
+    <BehaviorTree ID="GraspObjectReinforced" _inputs="robot;object;object_pose">
+        <Sequence>
+            <Sequence name="Setup Parameters">
+                <Script code="max_grip_force:=80.0" />
+            </Sequence>
+            <Action ID="CloseGripperReinforced" robot="{robot}" object="{object}"
+                pose="{object_pose}" force="reinforced" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- ReplaceAbyB alternative to GraspObject for SuctionGripper robots (madar), swapped in
+    by flavor_use_suction_activation_for_suction_gripper (gated by cm_suction_gripper_handling).
+    ActivateSuction is a separate primitive so MRS Flavors #4 (AisRetriable) and #5
+    (AhasReleaseCondition) have a concrete Action to wrap/retry independently of CloseGripper. -->
+    <BehaviorTree ID="GraspObjectSuction" _inputs="robot;object;object_pose">
+        <Sequence>
+            <Action ID="ActivateSuction" robot="{robot}" object="{object}" pose="{object_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="LiftObject" _inputs="robot;object;velocity;kinematic_restriction">
+        <Sequence>
+            <!-- Default for kinematic_restriction lives here (not in Pick's Setup Parameters):
+            Flavor 2 (AddKinematicRestriction) targets b_lift_object directly, so
+            add_or_change_parameter_value/add_to_setup_parameters need to find this Script within
+            LiftObject's own scope, not Pick's. -->
+            <Sequence name="Setup Parameters">
+                <Script code="kinematic_restriction:=none" />
+            </Sequence>
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="lift" offset="none"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Follows AttemptGrasp by default; Flavor 6 (DelayAUntilAfterB) can push this until after
+    LiftObject for SuctionGripper robots, since a failed vacuum grasp is immediately detectable once
+    LiftObject starts. Flavor 3 (ReplaceAbyB) replaces it with OperatorConfirmGrasp when a human
+    operator is present. -->
+    <BehaviorTree ID="VerifyGrasp" _inputs="robot;object">
+        <Sequence>
+            <Action ID="VerifyGrasp" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- ReplaceAbyB alternative to VerifyGrasp for Flavor 3: has the present operator confirm the
+    grasp visually instead of an automated check. -->
+    <BehaviorTree ID="OperatorConfirmGrasp" _inputs="robot;object">
+        <Sequence>
+            <Action ID="OperatorConfirmGrasp" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Condition/Recovery Behaviors for the Main Demo MRS Flavors. -->
+
+    <BehaviorTree ID="CheckGraspForce" _inputs="robot">
+        <Sequence>
+            <Action ID="CheckGraspForce" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="CheckVacuumPressure" _inputs="robot">
+        <Sequence>
+            <Action ID="CheckVacuumPressure" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="CheckDetectionConfidence" _inputs="robot;object">
+        <Sequence>
+            <Action ID="CheckDetectionConfidence" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="CheckObjectOnExpectedSurface" _inputs="robot;object">
+        <Sequence>
+            <Action ID="CheckObjectOnExpectedSurface" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="CheckObjectStableOnSurface" _inputs="robot;object">
+        <Sequence>
+            <Action ID="CheckObjectStableOnSurface" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="Regrasp" _inputs="robot;object">
+        <Sequence>
+            <Action ID="Regrasp" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="TightenGrip" _inputs="robot">
+        <Sequence>
+            <Action ID="TightenGrip" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="Reposition" _inputs="robot;object">
+        <Sequence>
+            <Action ID="Reposition" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="RepositionObject" _inputs="robot;object">
+        <Sequence>
+            <Action ID="RepositionObject" robot="{robot}" object="{object}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Alternate-recovery leaf for MRS Flavor #2's severe (grasp force ~0) branch;
+    isTerminal=true is asserted on p_signal_grasp_failure specifically (not on the shared p_regrasp)
+    so the recovery is ForceFailure-wrapped here without affecting p_regrasp's reuse as a
+    non-terminal recovery in MRS Flavor #3. -->
+    <BehaviorTree ID="SignalGraspFailure" _inputs="robot">
+        <Sequence>
+            <Action ID="SignalGraspFailure" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- MRS Flavor #8 (EscalatingRecovery on DriveBase) recovery leaves. -->
+    <BehaviorTree ID="ReplanAlternatePath" _inputs="robot;from;to">
+        <Sequence>
+            <Action ID="ReplanAlternatePath" robot="{robot}" from="{from}" to="{to}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="RequestOperatorAssistance" _inputs="robot">
+        <Sequence>
+            <Action ID="RequestOperatorAssistance" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <!-- Place sub-behaviors -->
+
+    <BehaviorTree ID="DeterminePlacement" _inputs="robot;object;surface" _outputs="placement_pose">
+        <Sequence>
+            <Action ID="DeterminePlacement" robot="{robot}" object="{object}" surface="{surface}"
+                placement_pose="{placement_pose}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="GoToPlacement" _inputs="robot;placement_pose;velocity;kinematic_restriction">
+        <Sequence>
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{placement_pose}" offset="none"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="ReleaseObject" _inputs="robot;object;surface">
+        <Sequence>
+            <Action ID="OpenGripper" robot="{robot}" />
+        </Sequence>
+    </BehaviorTree>
+
+    <BehaviorTree ID="RetreatArm" _inputs="robot;velocity;kinematic_restriction">
+        <Sequence>
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="retreat" offset="none"
+                velocity="{velocity}" kinematic_restriction="{kinematic_restriction}" />
+        </Sequence>
+    </BehaviorTree>
+
+</root>

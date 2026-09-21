@@ -1,0 +1,17 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group B's Context Mode alone
+# (cm_low_battery_mode), so the Group-B-alone cm-gated scenario does not
+# also pay for evaluating the other groups' Context Triggers. See
+# ../README.md.
+
+individuals:
+
+  - name: cm_low_battery_mode
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "User Preference (favor energy saving over speed): active whenever the acting robot's hasBattery is below 65. Ontology-state activation mechanism, SWRL-inferred (see rules: block below). Normally isContextModeOf b_navigate only (main_demo_context_modes.yaml); also declared here for b_pick so a single Pick task-plan step can exercise this group in this experiment without needing a 2-Behavior task plan."
+      isContextModeOf: [b_navigate, b_pick]
+
+rules:
+  - rule: "Robot(?r) ^ hasBattery(?r,?b) ^ lessThan(?b,65.0) -> contextModeIsActive(cm_low_battery_mode,true)"
+    associated_properties_to_clear:
+      - contextModeIsActive

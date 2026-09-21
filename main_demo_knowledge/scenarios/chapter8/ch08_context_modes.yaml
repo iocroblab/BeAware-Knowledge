@@ -1,0 +1,53 @@
+# Context Mode definitions reused from Chapter 7's main_demo_context_modes.yaml,
+# renamed here for Chapter 8. Only cm_suction_gripper_handling and
+# cm_force_sensor_available are used by the Pick Scenarios A/B MRS Flavors
+# below; the rest are unused leftovers from the Chapter 7 copy. See
+# ../README.md.
+
+individuals:
+
+  - name: cm_suction_gripper_handling
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Hardware State: active whenever the acting robot is fitted with a SuctionGripper (e.g. madar) rather than a ParallelGripper (e.g. tiago). SPARQL Trigger activation mechanism."
+      isContextModeOf: b_pick
+      hasContextTrigger: "ASK WHERE { <robot> onto:hasGripper ?g . ?g rdf:type onto:SuctionGripper }"
+
+  - name: cm_dangerous_object_handling
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Acceptable Risk: active whenever the manipulated object is a DangerousObject. SPARQL Trigger activation mechanism. Unused in Chapter 8."
+      isContextModeOf: b_pick
+      hasContextTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  - name: cm_operator_supervised
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Workspace Conditions: active whenever a human operator is present in the workspace (operatorPresent world-state fact). Expected-PDDL-State activation mechanism. Unused in Chapter 8."
+      isContextModeOf: b_pick
+      hasContextTrigger: "PDDL:operatorPresent"
+
+  - name: cm_low_battery_mode
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "User Preference (favor energy saving over speed): active whenever the acting robot's hasBattery is below 65. Ontology-state activation mechanism, SWRL-inferred. Unused in Chapter 8."
+      isContextModeOf: b_navigate
+
+  - name: cm_force_sensor_available
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Hardware State: active whenever the acting robot has a ForceTorqueSensor attached (tiago only). SPARQL Trigger activation mechanism. Gates mrs_pick_b2_grasp_force_holdcondition (Scenario B)."
+      isContextModeOf: [b_navigate, b_pick]
+      hasContextTrigger: "ASK WHERE { <robot> onto:hasSensor ?s . ?s rdf:type onto:ForceTorqueSensor }"
+
+  - name: cm_holding_object
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Workspace/Task-state: active whenever the acting robot is currently holding an object. Expected-PDDL-State activation mechanism. Unused in Chapter 8."
+      isContextModeOf: b_navigate
+      hasContextTrigger: "PDDL:robotHolding <robot> <@>"
+
+rules:
+  - rule: "Robot(?r) ^ hasBattery(?r,?b) ^ lessThan(?b,65.0) -> contextModeIsActive(cm_low_battery_mode,true)"
+    associated_properties_to_clear:
+      - contextModeIsActive

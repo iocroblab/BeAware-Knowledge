@@ -1,0 +1,82 @@
+# Extra Behaviors and Primitives added to the Pick Base Template (see
+# main_demo_templates.xml), reused from Chapter 7's baseline scenarios as a
+# dependency for Chapter 8's Pick Scenarios A/B. See ../README.md.
+#
+# - b_confirm_tool_selection / b_check_gripper_ready: default Pick steps, not
+#   targeted by any ch08 Flavor (b_check_gripper_ready is replaced in
+#   Scenario A by flavor_replace_gripper_check_with_suction_check).
+# - b_verify_grasp: default Pick step, not targeted by any ch08 Flavor.
+# - b_grasp_object_reinforced, b_operator_confirm_grasp, p_deactivate_suction,
+#   p_pause_before_release, b_localize_object, b_scan_world: unused leftovers
+#   from the Chapter 7 baseline Flavors, kept for structural completeness.
+individuals:
+  - name: b_confirm_tool_selection
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "ConfirmToolSelection"
+
+  - name: p_confirm_tool_selection
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: b_check_gripper_ready
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "CheckGripperReady"
+
+  - name: p_check_gripper_ready
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: b_verify_grasp
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "VerifyGrasp"
+
+  - name: p_verify_grasp
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: b_grasp_object_reinforced
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "GraspObjectReinforced"
+
+  - name: p_close_gripper_reinforced
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: b_operator_confirm_grasp
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "OperatorConfirmGrasp"
+
+  - name: p_operator_confirm_grasp
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_deactivate_suction
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_pause_before_release
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: b_localize_object
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "LocalizeObject"
+
+  - name: p_localize_object
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: b_scan_world
+    individual_classes: ["Behavior"]
+    property_dictionary:
+      hasBTid: "ScanWorld"
+
+  - name: p_scan_world
+    individual_classes: ["Primitive"]
+    property_dictionary: {}

@@ -1,0 +1,497 @@
+<?xml version="1.0" ?>
+<root BTCPP_format="4" main_tree_to_execute="ec_tree" time_of_generation="18:48:16">
+    <BehaviorTree ID="ec_tree">
+        <Sequence name="Main Sequence">
+            <SubTree ID="Execution Tree"/>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Execution Tree">
+        <Sequence name="Task Plan Sequence">
+            <Sequence name="PDDLConditionTree_Pick_1">
+                <SubTree ID="Preconditions_BT_Pick_1"/>
+                <SubTree ID="Pick_1" robot="tiago" object="glass2" location="table" surface="table_top"/>
+            </Sequence>
+            <Sequence name="PDDLConditionTree_Navigate_2">
+                <SubTree ID="Preconditions_BT_Navigate_2"/>
+                <SubTree ID="Navigate_2" robot="tiago" from="table" to="cupboard"/>
+            </Sequence>
+            <Sequence name="PDDLConditionTree_Move_3">
+                <SubTree ID="Preconditions_BT_Move_3"/>
+                <SubTree ID="Move_3" robot="tiago" location="cupboard" from_surface="table_top" to_surface="cupboard_bottom_shelf"/>
+            </Sequence>
+            <Sequence name="PDDLConditionTree_Place_4">
+                <SubTree ID="Preconditions_BT_Place_4"/>
+                <SubTree ID="Place_4" robot="tiago" object="glass2" location="cupboard" surface="cupboard_bottom_shelf"/>
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Preconditions_BT_Pick_1">
+        <Fallback name="Pick_1_PreconditionFallback">
+            <Sequence name="Pick_1_Preconditions">
+                <PrintString msg="[DEBUG] ************* Checking preconditions for Pick_1"/>
+                <Action ID="CheckPredicate" predicate="robot_at_location tiago table"/>
+                <Action ID="CheckPredicate" predicate="robot_at_surface tiago table_top"/>
+                <Action ID="CheckPredicate" predicate="surface_in_location table_top table"/>
+                <Action ID="CheckPredicate" predicate="object_on_surface glass2 table_top"/>
+                <Action ID="CheckPredicate" predicate="hand_empty tiago"/>
+            </Sequence>
+            <PrintStringAndFail msg="[DEBUG] Current goal is not set, replanning cannot be triggered"/>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="Pick_1" _applied_flavor__1="flavor_slow_pick_for_dangerous_object" _applied_flavor__2="flavor_replace_verify_grasp_with_operator_confirm">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="velocity:=1.0*0.5;grasp_style_param:=none;kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <SubTree ID="DetectObject_1_1" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+            
+            <SubTree ID="SelectTool_1_2" robot="{robot}" object="{object}"/>
+            
+            
+            <SubTree ID="ConfirmToolSelection_1_3" robot="{robot}" object="{object}"/>
+            
+            
+            <SubTree ID="CheckGripperReady_1_4" robot="{robot}"/>
+            
+            
+            <SubTree ID="AttemptGrasp_1_5" robot="{robot}" object="{object}" object_pose="{object_pose}" velocity="{velocity}" grasp_style_param="{grasp_style_param}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="OperatorConfirmGrasp_1_6" _old_id="VerifyGrasp"/>
+            <SubTree ID="LiftObject_1_7" robot="{robot}" object="{object}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+            <!--Modulated velocity by 0.5-->
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="Preconditions_BT_Navigate_2">
+        <Fallback name="Navigate_2_PreconditionFallback">
+            <Sequence name="Navigate_2_Preconditions">
+                <PrintString msg="[DEBUG] ************* Checking preconditions for Navigate_2"/>
+                <Action ID="CheckPredicate" predicate="robot_at_location tiago table"/>
+            </Sequence>
+            <PrintStringAndFail msg="[DEBUG] Current goal is not set, replanning cannot be triggered"/>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="Navigate_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_from="table" _s_to="cupboard"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="velocity:=1.0;kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <SubTree ID="CheckBatteryReserve_2_1" robot="{robot}"/>
+            
+            
+            <SubTree ID="PlanPath_2_2" robot="{robot}" from="{from}" to="{to}" path="{path}"/>
+            
+            
+            <SubTree ID="DriveToLocation_2_3" robot="{robot}" from="{from}" to="{to}" path="{path}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="Preconditions_BT_Move_3">
+        <Fallback name="Move_3_PreconditionFallback">
+            <Sequence name="Move_3_Preconditions">
+                <PrintString msg="[DEBUG] ************* Checking preconditions for Move_3"/>
+                <Action ID="CheckPredicate" predicate="robot_at_location tiago cupboard"/>
+                <Action ID="CheckPredicate" predicate="robot_at_surface tiago table_top"/>
+                <Action ID="CheckPredicate" predicate="surface_in_location cupboard_bottom_shelf cupboard"/>
+            </Sequence>
+            <PrintStringAndFail msg="[DEBUG] Current goal is not set, replanning cannot be triggered"/>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="Move_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_location="cupboard" _s_from_surface="table_top" _s_to_surface="cupboard_bottom_shelf"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="velocity:=1.0;kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <SubTree ID="PlanArmTrajectory_3_1" robot="{robot}" from_surface="{from_surface}" to_surface="{to_surface}" trajectory="{trajectory}"/>
+            
+            
+            <SubTree ID="MoveArmToSurface_3_2" robot="{robot}" location="{location}" from_surface="{from_surface}" to_surface="{to_surface}" trajectory="{trajectory}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="Preconditions_BT_Place_4">
+        <Fallback name="Place_4_PreconditionFallback">
+            <Sequence name="Place_4_Preconditions">
+                <PrintString msg="[DEBUG] ************* Checking preconditions for Place_4"/>
+                <Action ID="CheckPredicate" predicate="robot_at_location tiago cupboard"/>
+                <Action ID="CheckPredicate" predicate="robot_at_surface tiago cupboard_bottom_shelf"/>
+                <Action ID="CheckPredicate" predicate="surface_in_location cupboard_bottom_shelf cupboard"/>
+                <Action ID="CheckPredicate" predicate="robot_holding tiago glass2"/>
+            </Sequence>
+            <PrintStringAndFail msg="[DEBUG] Current goal is not set, replanning cannot be triggered"/>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="Place_4">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="cupboard" _s_surface="cupboard_bottom_shelf"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="velocity:=1.0;kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <SubTree ID="DeterminePlacement_4_1" robot="{robot}" object="{object}" surface="{surface}" placement_pose="{placement_pose}"/>
+            
+            
+            <SubTree ID="GoToPlacement_4_2" robot="{robot}" placement_pose="{placement_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="ReleaseObject_4_3" robot="{robot}" object="{object}" surface="{surface}"/>
+            
+            
+            <SubTree ID="RetreatArm_4_4" robot="{robot}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DetectObject_1_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}"/>
+        <Fallback>
+            
+            
+            <SubTree ID="LocalizeObject_1_1_1" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+            
+            <SubTree ID="ScanWorld_1_1_2" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+        
+        </Fallback>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="LocalizeObject_1_1_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}"/>
+        <Sequence>
+            
+            
+            <Action ID="LocalizeObject" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ScanWorld_1_1_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}"/>
+        <Sequence>
+            
+            
+            <Action ID="ScanWorld" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="SelectTool_1_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top"/>
+        <Sequence>
+            
+            
+            <Action ID="SelectTool" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ConfirmToolSelection_1_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top"/>
+        <Sequence>
+            
+            
+            <Action ID="ConfirmToolSelection" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="CheckGripperReady_1_4">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top"/>
+        <Sequence>
+            
+            
+            <Action ID="CheckGripperReady" robot="{robot}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="AttemptGrasp_1_5">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            <Action ID="OpenGripper" robot="{robot}"/>
+            
+            
+            <SubTree ID="DetermineGrasp_1_5_1" robot="{robot}" object="{object}" object_pose="{object_pose}" grasp_style_param="{grasp_style_param}" grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}"/>
+            
+            
+            <SubTree ID="GoToPregrasp_1_5_2" robot="{robot}" pregrasp_pose="{pregrasp_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="GoToGrasp_1_5_3" robot="{robot}" grasp_pose="{grasp_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="GraspObject_1_5_4" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DetermineGrasp_1_5_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_grasp_pose="{grasp_pose}" _s_pregrasp_pose="{pregrasp_pose}"/>
+        <Sequence>
+            
+            
+            <Action ID="DetermineGrasp" robot="{robot}" object="{object}" object_pose="{object_pose}" grasp_style_param="{grasp_style_param}" grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToPregrasp_1_5_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_pregrasp_pose="{pregrasp_pose}"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{pregrasp_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToGrasp_1_5_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_grasp_pose="{grasp_pose}"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{grasp_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GraspObject_1_5_4">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="max_grip_force:=40.0"/>
+                
+            
+            </Sequence>
+            
+            
+            <Action ID="CloseGripper" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="OperatorConfirmGrasp_1_6">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top"/>
+        <Sequence>
+            
+            
+            <Action ID="OperatorConfirmGrasp" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="LiftObject_1_7" _applied_flavor__3="flavor_add_kinematic_restriction_upright_for_liquid_container">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="table" _s_surface="table_top" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="kinematic_restriction:=upright"/>
+                
+            
+            </Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="lift" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+            <!--*Gave parameter kinematic_restriction new value upright AAAA-->
+            <!--Gave parameter kinematic_restriction new value upright-->
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="CheckBatteryReserve_2_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_from="table" _s_to="cupboard"/>
+        <Sequence>
+            
+            
+            <Action ID="CheckBatteryReserve" robot="{robot}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="PlanPath_2_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_from="table" _s_to="cupboard" _s_path="{path}"/>
+        <Sequence>
+            
+            
+            <Action ID="PlanPath" robot="{robot}" from="{from}" to="{to}" path="{path}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DriveToLocation_2_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_from="table" _s_to="cupboard" _s_path="{path}" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            <Action ID="DriveBase" robot="{robot}" from="{from}" to="{to}" path="{path}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="PlanArmTrajectory_3_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_location="cupboard" _s_from_surface="table_top" _s_to_surface="cupboard_bottom_shelf" _s_trajectory="{trajectory}"/>
+        <Sequence>
+            
+            
+            <Action ID="PlanArmTrajectory" robot="{robot}" from_surface="{from_surface}" to_surface="{to_surface}" trajectory="{trajectory}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="MoveArmToSurface_3_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_location="cupboard" _s_from_surface="table_top" _s_to_surface="cupboard_bottom_shelf" _s_trajectory="{trajectory}" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArm" robot="{robot}" from_surface="{from_surface}" to_surface="{to_surface}" trajectory="{trajectory}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DeterminePlacement_4_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="cupboard" _s_surface="cupboard_bottom_shelf" _s_placement_pose="{placement_pose}"/>
+        <Sequence>
+            
+            
+            <Action ID="DeterminePlacement" robot="{robot}" object="{object}" surface="{surface}" placement_pose="{placement_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToPlacement_4_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="cupboard" _s_surface="cupboard_bottom_shelf" _s_placement_pose="{placement_pose}" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{placement_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ReleaseObject_4_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="cupboard" _s_surface="cupboard_bottom_shelf"/>
+        <Sequence>
+            
+            
+            <Action ID="OpenGripper" robot="{robot}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="RetreatArm_4_4">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="glass2" _s_location="cupboard" _s_surface="cupboard_bottom_shelf" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="retreat" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <!--18:48:16-->
+</root>

@@ -1,0 +1,15 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 8 (Ignore) isolated,
+# targets DetectObject (isFlavorOf: b_detect_object), not Pick directly,
+# since LocalizeObject is a child of DetectObject's own Fallback (see
+# main_demo_templates.xml). Requires ch07_extra_pick_behaviors.yaml. See
+# ../README.md.
+
+individuals:
+
+  - name: flavor_ignore_localize_object_for_small_object
+    individual_classes: ["Ignore"]
+    property_dictionary:
+      description: "Skip the LocalizeObject branch of DetectObject's Fallback when the manipulated object is a SmallObject (e.g. bolt1), forcing a full ScanWorld unconditionally, since a lightweight localization attempt is not worth it for objects this small."
+      isFlavorOf: b_detect_object
+      hasTargetBehavior: b_localize_object
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:SmallObject }"

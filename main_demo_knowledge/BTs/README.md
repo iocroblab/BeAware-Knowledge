@@ -1,0 +1,7 @@
+# Main Demo BT Template Library
+
+`main_demo_templates.xml` is the \bt Template Library of the Main Demo scenario, containing the Plan-Level Behavior SubTrees (`Navigate`, `Move`, `Pick`, `Place`), their reusable sub-behaviors, and the primitive Actions they decompose into.
+
+A number of these sub-behaviors are implemented as a SubTree wrapping a single Action node (for example `CheckBatteryReserve`, `PlanPath`, or `DriveToLocation`), rather than a richer composition of several primitives. These are illustrative, meant to show how a Behavior is represented and where Flavors and Recovery Behaviors attach to it, and do not correspond to an actual ROS implementation. Adapting this template library to a real robot would require replacing these placeholder Actions with the actual perception, planning, and control nodes needed, and adjusting the blackboard ports (`_inputs`/`_outputs`) accordingly so that the right values are read from and written to the blackboard at each step.
+
+The `_pddl_parameters`, `_inputs`, and `_outputs` attributes on the `<BehaviorTree>` elements are not part of the BehaviorTree.CPP XML format itself; they are used internally by the BeAware framework to synchronize each Behavior with the blackboard, so that the values bound to its ports (e.g. the PDDL objects passed into a Plan-Level Behavior, or a value produced by one SubTree and consumed by the next) are available under the right names when the tree is ticked.

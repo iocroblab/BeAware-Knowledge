@@ -1,0 +1,425 @@
+# Ch05 Knowledge Base Loading and Scaling: Extra Large ontology-size variant,
+# layered on top of main_demo_large_expanded_ontology.yaml. Property values
+# (weights/colors/volumes) repeat across objects; only individual count
+# matters for this scaling comparison. See ../README.md.
+
+individuals:
+
+  # --- New world structure: an extra storage_room Location with two Surfaces -----
+
+  - name: storage_room
+    individual_classes: ["Location"]
+    property_dictionary:
+      locationInRoom: kitchen
+
+  - name: storage_room_left
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: storage_room
+
+  - name: storage_room_right
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: storage_room
+
+  # --- 50 new manipulable objects, reusing existing Glass/Knife/Can classes ------
+
+  - name: glass7
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.31
+      hasColor: clear
+      hasVolume: 0.32
+
+  - name: glass8
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.27
+      hasColor: tinted
+      hasVolume: 0.32
+
+  - name: glass9
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.32
+      hasColor: teal
+      hasVolume: 0.3
+
+  - name: glass10
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.31
+      hasColor: clear
+      hasVolume: 0.25
+
+  - name: glass11
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.27
+      hasColor: blue
+      hasVolume: 0.31
+
+  - name: glass12
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.31
+      hasColor: purple
+      hasVolume: 0.31
+
+  - name: glass13
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.3
+      hasColor: black
+      hasVolume: 0.29
+
+  - name: glass14
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.28
+      hasColor: pink
+      hasVolume: 0.25
+
+  - name: glass15
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.33
+      hasColor: purple
+      hasVolume: 0.29
+
+  - name: glass16
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.28
+      hasColor: black
+      hasVolume: 0.35
+
+  - name: glass17
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.28
+      hasColor: green
+      hasVolume: 0.29
+
+  - name: glass18
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.29
+      hasColor: red
+      hasVolume: 0.31
+
+  - name: glass19
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.33
+      hasColor: purple
+      hasVolume: 0.3
+
+  - name: glass20
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.26
+      hasColor: teal
+      hasVolume: 0.29
+
+  - name: glass21
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.31
+      hasColor: pink
+      hasVolume: 0.31
+
+  - name: glass22
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasMaterial: glass
+      hasWeight: 0.34
+      hasColor: red
+      hasVolume: 0.31
+
+  - name: glass23
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasMaterial: glass
+      hasWeight: 0.32
+      hasColor: clear
+      hasVolume: 0.32
+
+  - name: knife7
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.18
+      hasColor: green
+
+  - name: knife8
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.19
+      hasColor: pink
+
+  - name: knife9
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.13
+      hasColor: silver
+
+  - name: knife10
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.16
+      hasColor: pink
+
+  - name: knife11
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.15
+      hasColor: red
+
+  - name: knife12
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.15
+      hasColor: orange
+
+  - name: knife13
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.14
+      hasColor: teal
+
+  - name: knife14
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.17
+      hasColor: green
+
+  - name: knife15
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.17
+      hasColor: tinted
+
+  - name: knife16
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.16
+      hasColor: black
+
+  - name: knife17
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.13
+      hasColor: yellow
+
+  - name: knife18
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.14
+      hasColor: teal
+
+  - name: knife19
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.17
+      hasColor: blue
+
+  - name: knife20
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.14
+      hasColor: red
+
+  - name: knife21
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.19
+      hasColor: brown
+
+  - name: knife22
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.12
+      hasColor: pink
+
+  - name: knife23
+    individual_classes: ["Knife"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.12
+      hasColor: red
+
+  - name: can7
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.34
+      hasColor: green
+      hasVolume: 0.31
+
+  - name: can8
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.39
+      hasColor: teal
+      hasVolume: 0.34
+
+  - name: can9
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.32
+      hasColor: white
+      hasVolume: 0.32
+
+  - name: can10
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.39
+      hasColor: white
+      hasVolume: 0.31
+
+  - name: can11
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.31
+      hasColor: purple
+      hasVolume: 0.33
+
+  - name: can12
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.33
+      hasColor: gray
+      hasVolume: 0.32
+
+  - name: can13
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.36
+      hasColor: red
+      hasVolume: 0.31
+
+  - name: can14
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.4
+      hasColor: blue
+      hasVolume: 0.32
+
+  - name: can15
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.38
+      hasColor: pink
+      hasVolume: 0.31
+
+  - name: can16
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.36
+      hasColor: brown
+      hasVolume: 0.33
+
+  - name: can17
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.36
+      hasColor: yellow
+      hasVolume: 0.32
+
+  - name: can18
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.4
+      hasColor: blue
+      hasVolume: 0.31
+
+  - name: can19
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.36
+      hasColor: clear
+      hasVolume: 0.33
+
+  - name: can20
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.31
+      hasColor: teal
+      hasVolume: 0.33
+
+  - name: can21
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_right
+      hasWeight: 0.33
+      hasColor: orange
+      hasVolume: 0.32
+
+  - name: can22
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: storage_room_left
+      hasWeight: 0.33
+      hasColor: tinted
+      hasVolume: 0.32

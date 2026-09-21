@@ -1,0 +1,209 @@
+# Ch08 Pick Scenarios A/B: two contrasting Pick configurations, each with its
+# own regular Flavors and MRS Flavors selected by ontological reasoning, plus
+# one MRS Flavor (battery precondition) shared by both. See ../README.md.
+
+individuals:
+
+  # madar starts at the table (rather than the cupboard, its default location
+  # elsewhere in the Main Demo scenario), so the task plan is a single Pick.
+  - name: madar
+    individual_classes: ["Robot"]
+    clear_properties:
+      - robotAtLocation
+      - robotAtSurface
+    property_dictionary:
+      robotAtLocation: table
+      robotAtSurface: table_top
+
+  # --- Structural prerequisite: swap GraspObject -> GraspObjectSuction for SuctionGripper
+  # robots (madar), so Scenario A's Pick actually goes through ActivateSuction. -----------------
+
+  - name: flavor_use_suction_activation_for_suction_gripper
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace GraspObject with GraspObjectSuction (dedicated ActivateSuction primitive) inside AttemptGrasp, for robots fitted with a SuctionGripper (madar)."
+      isFlavorOf: b_attempt_grasp
+      hasTargetBehaviorA: b_grasp_object
+      hasTargetBehaviorB: b_grasp_object_suction
+      isFlavorInMode: cm_suction_gripper_handling
+
+  # --- Regular (non-MRS) Flavor, keeps LiquidContainer objects upright while lifting, which
+  # is what mrs_pick_a3_upright_holdcondition below monitors compliance with. Targets b_pick
+  # (rather than b_lift_object) so the modification shows up directly in Pick's own body. -----
+
+  - name: flavor_add_kinematic_restriction_upright_for_liquid_container
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "Keep LiquidContainer objects (e.g. glass1) upright while LiftObject is executed, so their contents are not spilled. Paired with mrs_pick_a3_upright_holdcondition, which monitors whether this restriction is actually respected during execution."
+      isFlavorOf: b_pick
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:LiquidContainer }"
+
+  # --- New Context Modes (Hardware State category) --------------------------------------------
+
+  - name: cm_camera_available
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Hardware State: active whenever the acting robot is fitted with an RGBDCamera (e.g. tiago). SPARQL Trigger activation mechanism."
+      isContextModeOf: b_pick
+      hasContextTrigger: "ASK WHERE { <robot> onto:hasSensor ?s . ?s rdf:type onto:RGBDCamera }"
+
+  - name: cm_camera_unavailable
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Hardware State: active whenever the acting robot has no RGBDCamera fitted (e.g. madar, which only has a LidarSensor). SPARQL Trigger activation mechanism, complementary to cm_camera_available."
+      isContextModeOf: b_pick
+      hasContextTrigger: "ASK WHERE { FILTER NOT EXISTS { <robot> onto:hasSensor ?s . ?s rdf:type onto:RGBDCamera } }"
+
+  # --- New Condition/Recovery Primitives ---------------------------------------------------------
+
+  - name: p_check_suction_ready
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_check_battery_sufficient
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_recharge_robot
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_check_object_presence_proximity
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_check_object_tilt_angle
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_clean_area
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  - name: p_check_object_weight_consistent
+    individual_classes: ["Primitive"]
+    property_dictionary: {}
+
+  # --- Regular (non-MRS) Flavor, Scenario A only: CheckGripperReady (a parallel-jaw-gripper
+  # readiness check) makes no sense for a SuctionGripper robot (madar), so it is replaced by a
+  # CheckSuctionReady check instead. Direct container of CheckGripperReady in Pick is b_pick. ---
+
+  - name: flavor_replace_gripper_check_with_suction_check
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Scenario A: replace CheckGripperReady with CheckSuctionReady inside Pick, for robots fitted with a SuctionGripper (madar), since a parallel-jaw gripper readiness check does not apply to a suction end effector."
+      isFlavorOf: b_pick
+      hasTargetBehaviorA: b_check_gripper_ready
+      hasTargetBehaviorB: p_check_suction_ready
+      isFlavorInMode: cm_suction_gripper_handling
+
+  # --- Regular (non-MRS) Flavor, Scenario B only: reduce Pick's arm velocity for DangerousObjects
+  # (e.g. knife1), the regular-Flavor analog of Scenario A's kinematic-restriction Flavor. --------
+
+  - name: flavor_slow_pick_for_dangerous_object
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Reduce Pick's arm velocity by 50% when the manipulated object is a DangerousObject (e.g. knife1)."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  # --- Shared: Precondition / ConRecPair ---------------------------------------------------------
+  # Before attempting the grasp, verify the acting robot has enough battery to complete the Pick;
+  # if not, recharge first. Gated on the robot being a MobileRobot (madar and tiago both are;
+  # see main_demo_ontology.owl), rather than FORCETRUE, since only battery-powered robots have a
+  # battery level to check in the first place.
+
+  - name: mrs_pick_shared_battery_precondition
+    individual_classes: ["ConRecPair", "AhasPreCondition"]
+    property_dictionary:
+      description: "Shared MRS Flavor: before AttemptGrasp, verify the robot has sufficient battery; if not, recharge before proceeding. Applies to both Pick scenarios regardless of end effector/sensing configuration."
+      hasTrigger: "ASK WHERE { <robot> rdf:type/rdfs:subClassOf* onto:MobileRobot }"
+      isMRSFlavorOf: b_pick
+      hasTargetBehavior: b_attempt_grasp
+      hasOneCondition: p_check_battery_sufficient
+      hasOneRecovery: p_recharge_robot
+      isTerminal: true
+
+  # --- Scenario A (madar / SuctionGripper / no camera / glass1) ----------------------------------
+
+  - name: mrs_pick_a1_proximity_precondition
+    individual_classes: ["ConRecPair", "AhasPreCondition"]
+    property_dictionary:
+      description: "Scenario A: for robots without a camera (madar), before AttemptGrasp, confirm the object's presence/position via the proximity sensor instead of vision; reposition on failure."
+      isMRSFlavorOf: b_pick
+      hasTargetBehavior: b_attempt_grasp
+      isFlavorInMode: cm_camera_unavailable
+      hasOneCondition: p_check_object_presence_proximity
+      hasOneRecovery: p_reposition
+
+  - name: mrs_pick_a2_suction_retry
+    individual_classes: ["AisRetriable"]
+    property_dictionary:
+      description: "Scenario A: for SuctionGripper robots (madar), retry ActivateSuction up to hasRetryNumber times, repositioning the robot between attempts."
+      isMRSFlavorOf: b_grasp_object_suction
+      hasTargetBehavior: p_activate_suction
+      isFlavorInMode: cm_suction_gripper_handling
+      hasRecoveryBlock: p_reposition
+      hasRetryNumber: 2
+
+  - name: mrs_pick_a3_upright_holdcondition
+    individual_classes: ["ConRecPair", "AhasHoldCondition"]
+    property_dictionary:
+      description: "Scenario A: while LiftObject executes, for LiquidContainers (e.g. glass1), continuously monitor the object's tilt angle; if it tips past threshold at any point the liquid may already have spilled, so a terminal clean_area recovery is triggered instead of a corrective regrasp."
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:LiquidContainer }"
+      isMRSFlavorOf: b_pick
+      hasTargetBehavior: b_lift_object
+      hasOneCondition: p_check_object_tilt_angle
+      hasOneRecovery: p_clean_area
+      isTerminal: true
+
+  - name: mrs_pick_a4_vacuum_weight_postcondition
+    individual_classes: ["MultipleConRec", "AhasPostCondition"]
+    property_dictionary:
+      description: "Scenario A: after LiftObject, for SuctionGripper robots (madar), verify both vacuum pressure and a weight-consistency check confirm the object is still attached; reposition if either fails."
+      isMRSFlavorOf: b_pick
+      hasTargetBehavior: b_lift_object
+      isFlavorInMode: cm_suction_gripper_handling
+      hasNecessaryCondition:
+        - p_check_vacuum_pressure
+        - p_check_object_weight_consistent
+      hasOneRecovery: p_reposition
+
+  # --- Scenario B (tiago / ParallelGripper / camera+force sensor / knife1) -----------------------
+
+  - name: mrs_pick_b1_visual_precondition
+    individual_classes: ["ConRecPair", "AhasPreCondition"]
+    property_dictionary:
+      description: "Scenario B: for camera-equipped robots (tiago), before AttemptGrasp, confirm detection confidence visually; reposition on failure."
+      isMRSFlavorOf: b_pick
+      hasTargetBehavior: b_attempt_grasp
+      isFlavorInMode: cm_camera_available
+      hasOneCondition: p_check_detection_confidence
+      hasOneRecovery: p_reposition
+
+  - name: mrs_pick_b2_grasp_force_holdcondition
+    individual_classes: ["BranchedRecoveryThreshold", "AhasHoldCondition"]
+    property_dictionary:
+      description: "Scenario B: while LiftObject executes, for ForceTorqueSensor-equipped robots (tiago), continuously monitor grasp force. Above threshold: tighten the grip and continue. At or below threshold (object slipping free): terminal grasp-failure signal."
+      isMRSFlavorOf: b_pick
+      hasTargetBehavior: b_lift_object
+      isFlavorInMode: cm_force_sensor_available
+      hasOneCondition: p_check_grasp_force
+      hasNecessaryRecovery: p_tighten_grip
+      hasAlternateRecovery: p_signal_grasp_failure
+      hasThresholdValue: 5.0
+      hasBranchVariable: "grasp_force_reading"
+
+  - name: mrs_pick_b3_adaptive_grip_retry
+    individual_classes: ["ParameterAdaptiveRetry", "AhasBehaviorRecovery"]
+    property_dictionary:
+      description: "Scenario B: for ParallelGripper robots (tiago), retry CloseGripper up to hasRetryNumber times, incrementing grip_force on the blackboard after each failed attempt."
+      hasTrigger: "ASK WHERE { <robot> onto:hasGripper ?g . ?g rdf:type onto:ParallelGripper }"
+      isMRSFlavorOf: b_grasp_object
+      hasTargetBehavior: p_close_gripper
+      hasParameterModification: "grip_force:=grip_force+10.0"
+      hasRetryNumber: 3

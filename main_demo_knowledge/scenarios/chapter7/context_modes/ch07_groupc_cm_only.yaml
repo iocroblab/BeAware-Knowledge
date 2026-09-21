@@ -1,0 +1,13 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group C's Context Mode alone
+# (cm_operator_supervised), so the Group-C-alone cm-gated scenario does not
+# also pay for evaluating the other groups' Context Triggers. See
+# ../README.md.
+
+individuals:
+
+  - name: cm_operator_supervised
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Workspace Conditions: active whenever a human operator is present (operatorPresent world-state fact). Expected-PDDL-State activation mechanism."
+      isContextModeOf: b_pick
+      hasContextTrigger: "PDDL:operatorPresent"

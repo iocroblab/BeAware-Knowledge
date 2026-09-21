@@ -1,0 +1,2376 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#"
+     xml:base="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology">
+        <owl:versionIRI rdf:resource="urn:absolute:2.6"/>
+        <rdfs:comment>Version 2.6
+September 2026
+
+Public version attached to the thesis</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties"/>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BehaviorProperties -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BehaviorProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextModeProperties -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextModeProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:comment>properties used by flavors</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#LinkProperties -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#LinkProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties"/>
+        <rdfs:comment>Properties for the links</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasAlternateCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasAlternateCondition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasAlternateRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasAlternateRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Links an MRS Flavor to the Behavior(s) or Primitive(s) that implement condition checking (precondition, hold condition, or postcondition monitoring). Sub-properties (hasOneCondition, hasNecessaryCondition, hasAlternateCondition, hasReleaseCondition) specialise which condition role the linked individual plays.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionedRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionedRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionRecoveryLink"/>
+        <rdfs:comment>Links an MRS Flavor to one or more ConditionRecoveryLink pair individuals, each reifying an independent (condition, recovery) pair (see BranchedRecoveryByCondition). Each recovery is gated on its own pair&apos;s error code, so if multiple conditions fail, each paired recovery fires in order.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasContextMode -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasContextMode">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BehaviorProperties"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isContextModeOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:comment>Links a Behavior to its ContextModes (also called ActionModes). When a behavior has multiple context modes, the framework expands it into separate variants (e.g., behavior__mode_alpha, behavior__mode_beta).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasFlavor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasFlavor">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BehaviorProperties"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isFlavorOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:comment>Behavior has the flavor. Flavors modify or augment behavior execution based on context. Use hasMRSFlavor for monitoring/recovery structures.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasKinematicRestriction -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasKinematicRestriction">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#KinematicRestriction"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasMRSFlavor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasMRSFlavor">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BehaviorProperties"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isMRSFlavorOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor"/>
+        <rdfs:comment>Behavior has the MRS Flavor. MRS (Monitoring and Recovery Structure) flavors add preconditions, hold conditions, postconditions, and recovery behaviors for robust execution.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNecessaryCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNecessaryCondition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNecessaryRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNecessaryRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneCondition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOrderedRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOrderedRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryPriorityLink"/>
+        <rdfs:comment>Links an MRS Flavor to one or more RecoveryPriorityLink individuals, each reifying a recovery with an explicit escalation order. Used by EscalatingRecovery (priority variant) and ConWithEscalatingRecovery.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Links a Behavior to its recovery Behavior or Primitive that should be executed if the primary behavior fails.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Links an MRS Flavor to the Behavior(s) or Primitive(s) that implement recovery actions when conditions fail or violations occur.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasReleaseCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasReleaseCondition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneCondition"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Links an AhasReleaseCondition MRS Flavor to the single Behavior or Primitive that acts as the release criterion. Unlike a guard condition, a release condition is used in a ReactiveFallback structure: the target behavior continues executing until this condition returns SUCCESS, at which point the structure succeeds. Sub-property of hasOneCondition so that reasoners infer hasOneCondition membership automatically.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasSubTargetBehavior -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasSubTargetBehavior">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Secondary target behavior used in flavors that operate on two behaviors, where hasTargetBehavior is the primary (A) and hasSubTargetBehavior is the secondary (B).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Targets the behavior in the BT that will be affected by the flavor</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+        <rdfs:comment>In flavors with A and B, targets the behavior A</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+        <rdfs:comment>In flavors with A and B, targets the behavior B (second behavior in binary operations like ReplaceAbyB, AddBtoA, SwitchAandB).</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasUntilBehavior -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasUntilBehavior">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Links a flavor to the Behavior or Primitive that acts as the termination condition in an until-style structure.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#incompatibleWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#incompatibleWith">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextModeProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:comment>Related two Action Modes and makes them incompatible. The basic example is that &quot;slow&quot; and &quot;fast&quot; cannot be active at the same time</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isContextModeOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isContextModeOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextModeProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>Behavior that has this action mode</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isFlavorInMode -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isFlavorInMode">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#modeHasFlavor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isFlavorOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isFlavorOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareObjectProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isMRSFlavorOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isMRSFlavorOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FlavorProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksCondition -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksCondition">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#LinkProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionRecoveryLink"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>The condition side of a ConditionRecoveryLink pair.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksOrderedRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksOrderedRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#LinkProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryPriorityLink"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>The recovery side of a RecoveryPriorityLink, tried in hasEscalationOrder order.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksRecovery -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksRecovery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#LinkProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionRecoveryLink"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:comment>The recovery side of a ConditionRecoveryLink pair, gated on its paired condition&apos;s failure.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#modeHasFlavor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#modeHasFlavor">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextModeProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:comment>Flavors that apply for this action mode. These flavors are automatically applied when behaviors are expanded with this specific context mode.</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParamModulateProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParamModulateProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplacedByParamProperties -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplacedByParamProperties">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#contextModeIsActive -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#contextModeIsActive">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasBTid -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasBTid">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasBranchVariable -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasBranchVariable">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:comment>Blackboard key name written by the condition in BranchedRecoveryThreshold. The condition writes its numeric severity value here so the two recoveries can branch on it against hasThresholdValue.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasContextTrigger -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasContextTrigger">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Optional SPARQL or PDDL query string used to activate this ContextMode at configuration time. At most one per ContextMode; activation can also happen via SWRL rules that set contextModeIsActive directly.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasDecorator -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasDecorator">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:comment>Specifies the BehaviorTree decorator/control node type (e.g., Sequence, Fallback) to use when adding or modifying behaviors.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasEscalationOrder -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasEscalationOrder">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryPriorityLink"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Integer ordering key for a RecoveryPriorityLink. Lower values are tried first in EscalatingRecovery or ConWithEscalatingRecovery. Defaults to 0 if absent.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasInputParameter -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasInputParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParameter"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNewValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNewValue">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParamModulateProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier"/>
+        <rdfs:comment>The new value to assign to a parameter when using FixParameter or ModulateParameter flavors.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOutputParameter -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOutputParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParameter"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParamTarget -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParamTarget">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParamModulateProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>The name of the target parameter to be modified or fixed by a ParameterModifier flavor.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParameter -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParameter">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParameterModification -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParameterModification">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>BT Script code expression run after each failed attempt in ParameterAdaptiveRetry (e.g. &quot;speed:=speed+1.0&quot;). Alternative to hasRecoveryBlock when the parameter change is a simple blackboard operation.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPercentageModifier -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPercentageModifier">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParamModulateProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ModulateParameter"/>
+        <rdfs:range>
+            <rdfs:Datatype>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#decimal"/>
+                    <rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#double"/>
+                </owl:unionOf>
+            </rdfs:Datatype>
+        </rdfs:range>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPort -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPort">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                    <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPortwithDefaultValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPortwithDefaultValue">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPort"/>
+        <rdfs:comment>has a BT port with a default value. It has to be in the format &quot;key=value&quot;</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPriority -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPriority">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+        <rdfs:comment>Integer priority used to order MRS Flavors of the same family before merging their Condition and Recovery Blocks. Lower values are merged first. Defaults to 0 if absent.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasReasoningDescription -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasReasoningDescription">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>This property gets read from yaml files, and is used for debugging to print associated comments</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRetryNumber -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRetryNumber">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>BT Script expression added as a node attribute by ScriptModifier Flavors (AddSuccessIf, AddFailureIf, AddOnSuccess, AddOnFailure, AddPost).</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetProperty -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetProperty">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateFlavors"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasThresholdValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasThresholdValue">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:comment>Numeric threshold for BranchedRecoveryThreshold: the primary recovery (hasNecessaryRecovery) runs when hasBranchVariable &lt; threshold; the alternate recovery (hasAlternateRecovery) runs when hasBranchVariable &gt;= threshold.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTrigger -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTrigger">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:comment>Optional SPARQL trigger query for the Flavor. At most one per Flavor. Flavors assigned to a ContextMode via modeHasFlavor may omit this property; their activation is governed by the mode. The special value &quot;FORCETRUE&quot; always evaluates to true.</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasValue -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasValue">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateProperties"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateFlavors"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isTerminal -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isTerminal">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+        <rdfs:comment>data property that determines if a flavor has a terminal recovery, meaning that the condition should interrupt the behavior, and then perform said recovery</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#obtainsParamValuewithQuery -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#obtainsParamValuewithQuery">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#replacedByParam -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#replacedByParam">
+        <rdfs:subPropertyOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareProperties"/>
+        <rdfs:comment>parameter that replaces the behavior. E.g. if we replace a &quot;select tool&quot; behavior, we replace it by the param &quot;select_tool&quot;</rdfs:comment>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ARedundantwithB -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ARedundantwithB">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>A and B must be together in a sequence A−→B. This is replaced by A?B, indicating that if A returns SUCCESS, B does not need to be done</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ARequiresPropertyQ -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ARequiresPropertyQ">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateFlavors"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetProperty"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ASetsPropertyQ -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ASetsPropertyQ">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateFlavors"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetProperty"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract">
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Physical"/>
+        <rdfs:comment>Top-level class for abstract/conceptual entities (Behaviors, Primitives, Flavors, ContextModes, Parameters). Disjoint from Physical entities.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddBtoA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddBtoA">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasDecorator"/>
+                        <owl:hasValue>Fallback</owl:hasValue>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasDecorator"/>
+                        <owl:hasValue>Sequence</owl:hasValue>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasDecorator"/>
+                        <owl:hasValue>others?</owl:hasValue>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Loads the template for B and adds it TO THE RIGHT of A, with a decorator that has been selected with hasDecorator</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddFailureIf -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddFailureIf">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Adds a _failureIf script expression to the target BT node; the node returns FAILURE when the expression evaluates to true.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddKinematicRestriction -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddKinematicRestriction">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FixParameter"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#KinematicFlavors"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParamTarget"/>
+                <owl:hasValue>kinematic_restriction</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddOnFailure -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddOnFailure">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Adds an _onFailure script executed on the target BT node when it returns FAILURE.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddOnSuccess -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddOnSuccess">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Adds an _onSuccess script executed on the target BT node when it returns SUCCESS.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddPost -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddPost">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Adds a _post script executed on the target BT node after it completes, regardless of status.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddSuccessIf -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AddSuccessIf">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasScript"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Adds a _successIf script expression to the target BT node; the node returns SUCCESS when the expression evaluates to true.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasBehaviorRecovery -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasBehaviorRecovery">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFamilies"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>this one puts the action into a fallback with a recovery to do if the action itself returns failure</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasHoldCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasHoldCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFamilies"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasHoldConditionTerminal -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasHoldConditionTerminal">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasHoldCondition"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isTerminal"/>
+                <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasPostCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasPostCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFamilies"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasPreCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasPreCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFamilies"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasReleaseCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasReleaseCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasBehaviorRecovery"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasReleaseCondition"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>MRS type: ticks the behavior until the release condition succeeds, then halts and returns SUCCESS. No recovery. Used with behavior family. BT structure: ReactiveFallback[condition, behavior]. Uses hasReleaseCondition (sub-property of hasOneCondition) so reasoners infer hasOneCondition automatically.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AisRetriable -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AisRetriable">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AhasBehaviorRecovery"/>
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AlternateConditions -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AlternateConditions">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasAlternateCondition"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Multiple alternate conditions, any one of which is sufficient (Fallback semantics); the shared recovery only fires if every alternate condition fails.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AuxiliaryBehavior -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#AuxiliaryBehavior">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Behaviors that do no physical work, e.g. &quot;Compute Plan&quot;</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BAlternativetoA -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BAlternativetoA">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateFlavors -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BeAwareStateFlavors">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:comment>Flavors that directly interact with the state inside the beaware framework.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPortwithDefaultValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasBTid"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Represents a behavior, which is composed of other behaviors and primitives.
+
+In BTs, they are represented by the Tag SubTree and BehaviorTree
+
+NOT ALL BEHAVIORS ARE PLAN LEVEL (PDDL) BEHAVIORS</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BranchedRecoveryByCondition -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BranchedRecoveryByCondition">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasConditionedRecovery"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionRecoveryLink"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Two or more conditions, each paired with its own dedicated recovery via hasConditionedRecovery (ConditionRecoveryLink pairs). Each recovery is gated on its own pair&apos;s error code, so if multiple conditions fail, each paired recovery fires in order.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BranchedRecoveryThreshold -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#BranchedRecoveryThreshold">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasAlternateRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNecessaryRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneCondition"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasBranchVariable"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasThresholdValue"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>MRS type: one condition with two recoveries selected by a numeric threshold. The condition writes a severity value to hasBranchVariable; hasNecessaryRecovery runs when severity &lt; threshold, hasAlternateRecovery runs when severity &gt;= threshold.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConRecPair -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConRecPair">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneCondition"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConWithEscalatingRecovery -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConWithEscalatingRecovery">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:comment>MRS type: one condition paired with an escalating recovery structure. When the condition fails, recoveries linked via hasOrderedRecovery are tried in hasEscalationOrder order (lower first), as Fallback[_skipIf=&quot;ec!=1&quot;][rec1, rec2, ...].</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionBehavior -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionBehavior">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Behaviors representing conditions</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionRecoveryLink -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ConditionRecoveryLink">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Link"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksCondition"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Reifies a single (condition, recovery) pair so an MRS Flavor can link to multiple independent pairs via hasConditionedRecovery (see BranchedRecoveryByCondition), each with its own error code.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+        <rdfs:comment>Defines different execution contexts for behaviors (equivalent to ActionMode). When behaviors have multiple context modes, they are expanded into separate variants with mode-specific flavors applied (e.g., behavior__mode1, behavior__mode2).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#DelayAUntilAfterB -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#DelayAUntilAfterB">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#DelayAUntilBeforeB -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#DelayAUntilBeforeB">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#EscalatingRecovery -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#EscalatingRecovery">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Self-monitored MRS type: multiple recoveries (hasRecoveryBlock, one or more) tried in escalating order (lightest first) after the target behavior fails, as Fallback[behavior, recovery_1, recovery_2, ...]. The target behavior is not retried between recovery steps.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FixParameter -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FixParameter">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNewValue"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#double"/>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNewValue"/>
+                        <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                        <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+                    </owl:Restriction>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParamTarget"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isFlavorOf"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTrigger"/>
+                <owl:maxQualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:maxQualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Flavor types. Flavors directly linked to a Behavior via hasFlavor require exactly one hasTrigger. Flavors assigned only via a ContextMode (modeHasFlavor) may have zero triggers.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FunctionalBehavior -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#FunctionalBehavior">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Behaviors that do some function in the world. E.g., &quot;Retract Arm&quot;</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#HardwareStateMode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#HardwareStateMode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#HasRec -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#HasRec">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>MRS type: self-monitored. Wraps the target behavior in Fallback[behavior, recovery]. The behavior&apos;s own FAILURE triggers the recovery. No condition block required.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Ignore -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Ignore">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>The target subbehavior is deleted from the tree or marked to be skipped</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#KinematicFlavors -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#KinematicFlavors">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#KinematicRestriction -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#KinematicRestriction">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+        <rdfs:comment>Represents a kinematic restriction for a movement. E.g. &quot;keep upright&quot;</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Link -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Link">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFamilies -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFamilies">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isMRSFlavorOf"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <rdfs:comment>MRS Flavors refer to Monitoring and Recovery Structure flavors, which are handled a bit differently in E.C. They are still a WIP</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSFlavor"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#isTerminal"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onDataRange rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>flavor that indicates that the target has a MRS
+
+(WIP, its probably too simple)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ModulateParameter -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ModulateParameter">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasParamTarget"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MultipleConRec -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MultipleConRec">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasNecessaryCondition"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasOneRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Object">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Physical"/>
+        <rdfs:comment>Represents physical objects in the environment that can be manipulated or referenced by behaviors.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterAdaptiveRetry -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterAdaptiveRetry">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#MRSType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasRecoveryBlock"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Self-monitored MRS type: retries the target behavior up to hasRetryNumber times; the hasRecoveryBlock recovery runs after every failed attempt (not just the last) to adjust a runtime parameter before the next retry, as RetryUntilSuccessful[Fallback[behavior, ForceFailure[recovery]]].</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <owl:priorVersion>Flavors that modify or set parameters in the BT</owl:priorVersion>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Physical -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Physical">
+        <rdfs:comment>Top-level class for physical/real-world entities (e.g., Objects). Disjoint from Abstract entities.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#PlanLevelBehavior -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#PlanLevelBehavior">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Those that appear in the PDDL domain</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasPortwithDefaultValue"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Represents an INDIVISIBLE unit of action. 
+
+In BTs, they are represented by the Tag &quot;Action&quot;.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryBehavior -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryBehavior">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Behaviors that represent recoveries</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryPriorityLink -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RecoveryPriorityLink">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Link"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#linksOrderedRecovery"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment>Reifies a single recovery with an explicit escalation order for use in EscalatingRecovery (hasOrderedRecovery) or ConWithEscalatingRecovery. linksOrderedRecovery points to the recovery; hasEscalationOrder gives the sorting key (lower = tried first).</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplaceAbyB -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplaceAbyB">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplaceByParam -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplaceByParam">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ParameterModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehavior"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#obtainsParamValuewithQuery"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#replacedByParam"/>
+                <owl:someValuesFrom rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RiskActionMode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#RiskActionMode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Robot">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Physical"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <owl:priorVersion>Flavors that modify the order of flavors in a sequence</owl:priorVersion>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SubbehaviorModifier">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Flavor"/>
+        <owl:priorVersion>Flavors that apply to the target subbehavior itself</owl:priorVersion>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SwitchAandB -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SwitchAandB">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorA"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#hasTargetBehaviorB"/>
+                <owl:qualifiedCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#nonNegativeInteger">1</owl:qualifiedCardinality>
+                <owl:onClass>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+                            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:onClass>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#UserMode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#UserMode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#WorkspaceConditionMode -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#WorkspaceConditionMode">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ContextMode"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#WorldState -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#WorldState">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Abstract"/>
+        <rdfs:comment>Marker class for the single global world_state individual, used to hold zero-parameter PDDL predicate values (e.g. operator_present) that are not tied to any single Robot/Location/Surface. Exists so world_state has a real, named class (instead of just owl:Thing), which the generic individuals YAML loader (add_new_individual_to_ontology) requires for its individual_classes lookup.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#b_always_success -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#b_always_success">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Built-in no-op behavior that always returns SUCCESS. Used as a default/placeholder recovery when no real recovery is needed, for testing mostly.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#b_replan -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#b_replan">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Behavior"/>
+        <rdfs:comment>Regenerates the PDDL Problem from the current world state and re-invokes the Task Planner, preserving the original goal, when a monitored precondition fails during execution.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_check_predicate -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_check_predicate">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Checks whether a PDDL predicate holds in the most recently generated PDDL state and returns a Boolean result.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_check_property -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_check_property">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Retrieves the value of a specified ontology property of an individual and returns SUCCESS when it satisfies the configured condition.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_configure_execution -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_configure_execution">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Applies the Execution Configuration module to a Plan-Level Behavior, constructing its BT subtree from the current world state and domain knowledge.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_create_new_pddl_problem -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_create_new_pddl_problem">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Constructs a new PDDL Problem from the current ontology state and the current task goal.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_execute_bt -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_execute_bt">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Executes the constructed BT, ticking its nodes until the corresponding Behavior returns SUCCESS or FAILURE.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_ros_action -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_ros_action">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Generic Primitive representing any ROS Action</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_service -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_service">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Generic Primitive representing any ROS Service</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_subscriber -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_subscriber">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Generic primitive representing a subscriber to a topic</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_subscriber_with_threshold -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_generic_subscriber_with_threshold">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Generic primitive representing a subscriber to a topic with a threshold value</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_plan -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_plan">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Invokes the Task Planner on the PDDL Domain and Problem to compute a valid plan of Plan-Level Behaviors.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_set_property -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_set_property">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Assigns a specified value to an ontology property of an individual through the knowledge-update service.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_sparql_query -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#p_sparql_query">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Primitive"/>
+        <rdfs:comment>Submits a SPARQL query to the Ontology Manager and returns its result to the BT.</rdfs:comment>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#world_state -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#world_state">
+        <rdf:type rdf:resource="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#WorldState"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#Ignore"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#ReplaceByParam"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/oriol.ruiz/ontologies/2023/8/beaware_ontology#SequenceModifier"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

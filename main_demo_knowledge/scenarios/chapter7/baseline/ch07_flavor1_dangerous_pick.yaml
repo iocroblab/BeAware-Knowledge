@@ -1,0 +1,13 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 1 (ModulateParameter)
+# isolated. See ../README.md.
+
+individuals:
+
+  - name: flavor_slow_pick_for_dangerous_object
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Reduce Pick's arm velocity by 50% when the manipulated object is a DangerousObject (e.g. knife1)."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"

@@ -1,0 +1,15 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 2 (AddKinematicRestriction)
+# isolated, triggered by the LiquidContainer class rather than FragileObject,
+# since keeping a container upright while lifting is about not spilling its
+# contents rather than fragility per se. See ../README.md.
+
+individuals:
+
+  - name: flavor_add_kinematic_restriction_upright_for_liquid_container
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "AddKinematicRestriction (subclass of FixParameter with hasParamTarget fixed to 'kinematic_restriction'): keep LiquidContainer objects (e.g. glass1) upright while LiftObject is executed, so their contents are not spilled."
+      isFlavorOf: b_lift_object
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:LiquidContainer }"

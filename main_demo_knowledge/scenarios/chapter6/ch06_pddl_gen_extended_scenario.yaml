@@ -1,0 +1,128 @@
+# Ch06 (Re)Planning Design: PDDL Problem Generation showcase. Layered on top
+# of the base Main Demo ontology to produce the "extended" PDDL Problem shown
+# alongside the baseline. See ../README.md.
+
+individuals:
+
+  # --- Reposition base manipulation objects onto different Surfaces, so that
+  # objectOnSurface is derived by the geometric SWRL rule below instead of
+  # being directly asserted. clear_properties removes the base table_top
+  # assertion first, since objectOnSurface is Functional. can1 is left on
+  # table_top for contrast. ---
+
+  - name: glass1
+    individual_classes: ["Glass"]
+    clear_properties: ["objectOnSurface"]
+    property_dictionary:
+      # Inside cupboard_top_shelf's bounding box (X:[1.00,1.50], Y:[-0.25,0.25], Z:[1.50,1.55])
+      hasPositionX: 1.20
+      hasPositionY: 0.05
+      hasPositionZ: 1.52
+
+  - name: knife1
+    individual_classes: ["Knife"]
+    clear_properties: ["objectOnSurface"]
+    property_dictionary:
+      # Inside fridge_door_rack's bounding box (X:[-1.35,-1.20], Y:[-0.20,0.20], Z:[0.90,0.95])
+      hasPositionX: -1.25
+      hasPositionY: 0.05
+      hasPositionZ: 0.92
+
+  - name: can1
+    individual_classes: ["Can"]
+    property_dictionary:
+      # Inside table_top's bounding box (X:[0.40,0.90], Y:[-0.30,0.30], Z:[0.75,0.80]); unchanged
+      hasPositionX: 0.75
+      hasPositionY: 0.15
+      hasPositionZ: 0.78
+
+  - name: bolt1
+    individual_classes: ["SmallObject"]
+    clear_properties: ["objectOnSurface"]
+    property_dictionary:
+      # Inside cupboard_bottom_shelf's bounding box (X:[1.00,1.50], Y:[-0.25,0.25], Z:[0.30,0.35])
+      hasPositionX: 1.20
+      hasPositionY: -0.05
+      hasPositionZ: 0.32
+
+  - name: glass2
+    individual_classes: ["Glass"]
+    clear_properties: ["objectOnSurface"]
+    property_dictionary:
+      # Inside fridge_top_shelf's bounding box (X:[-1.20,-0.80], Y:[-0.25,0.25], Z:[1.30,1.35])
+      hasPositionX: -1.00
+      hasPositionY: 0.05
+      hasPositionZ: 1.32
+
+  # --- New counter_left Surface plus two new manipulation objects, showing
+  # that :objects is not fixed to the base individual set. Both get
+  # hasPosition* so they still resolve objectOnSurface after the rule's
+  # clear step below. ---
+
+  - name: counter
+    individual_classes: ["Location"]
+    property_dictionary:
+      locationInRoom: kitchen
+
+  - name: counter_left
+    individual_classes: ["Surface"]
+    property_dictionary:
+      surfaceInLocation: counter
+      hasBBoxMinX: -0.80
+      hasBBoxMaxX: -0.40
+      hasBBoxMinY: -0.30
+      hasBBoxMaxY: 0.30
+      hasBBoxMinZ: 0.85
+      hasBBoxMaxZ: 0.90
+
+  - name: glass_new
+    individual_classes: ["Glass"]
+    property_dictionary:
+      objectOnSurface: counter_left
+      hasMaterial: glass
+      hasWeight: 0.28
+      hasColor: clear
+      hasVolume: 0.25
+      # Inside counter_left's bounding box (X:[-0.80,-0.40], Y:[-0.30,0.30], Z:[0.85,0.90])
+      hasPositionX: -0.70
+      hasPositionY: -0.10
+      hasPositionZ: 0.86
+
+  - name: can_new
+    individual_classes: ["Can"]
+    property_dictionary:
+      objectOnSurface: counter_left
+      hasWeight: 0.37
+      hasColor: green
+      hasVolume: 0.33
+      # Inside counter_left's bounding box (X:[-0.80,-0.40], Y:[-0.30,0.30], Z:[0.85,0.90])
+      hasPositionX: -0.60
+      hasPositionY: 0.00
+      hasPositionZ: 0.87
+
+  # --- Override operatorPresent (false in the base ontology) to true on the
+  # shared world_state individual, illustrating the zero-parameter predicate
+  # case. clear_properties is required since updates otherwise only append. ---
+
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true
+
+rules:
+  # Derives objectOnSurface for any ManipulationObject inside a Surface's
+  # bounding box; associated_properties_to_clear prevents stale values from
+  # accumulating across reasoning passes (see
+  # ../state_reasoner_evaluation/README.md).
+  - rule: >-
+      ManipulationObject(?o) ^ hasPositionX(?o,?x) ^ hasPositionY(?o,?y) ^ hasPositionZ(?o,?z) ^
+      Surface(?s) ^ hasBBoxMinX(?s,?minx) ^ hasBBoxMaxX(?s,?maxx) ^
+      hasBBoxMinY(?s,?miny) ^ hasBBoxMaxY(?s,?maxy) ^
+      hasBBoxMinZ(?s,?minz) ^ hasBBoxMaxZ(?s,?maxz) ^
+      greaterThanOrEqual(?x,?minx) ^ lessThanOrEqual(?x,?maxx) ^
+      greaterThanOrEqual(?y,?miny) ^ lessThanOrEqual(?y,?maxy) ^
+      greaterThanOrEqual(?z,?minz) ^ lessThanOrEqual(?z,?maxz)
+      -> objectOnSurface(?o,?s)
+    associated_properties_to_clear:
+      - objectOnSurface

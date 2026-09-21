@@ -1,0 +1,328 @@
+<?xml version="1.0" ?>
+<root BTCPP_format="4" main_tree_to_execute="ec_tree" time_of_generation="18:30:13">
+    <BehaviorTree ID="ec_tree">
+        <Sequence name="Main Sequence">
+            <SubTree ID="Execution Tree"/>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Execution Tree">
+        <Sequence name="Task Plan Sequence">
+            <Sequence name="PDDLConditionTree_Pick_1">
+                <SubTree ID="Preconditions_BT_Pick_1"/>
+                <SubTree ID="Pick_1" robot="tiago" object="knife1" location="table" surface="table_top"/>
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Preconditions_BT_Pick_1">
+        <Fallback name="Pick_1_PreconditionFallback">
+            <Sequence name="Pick_1_Preconditions">
+                <PrintString msg="[DEBUG] ************* Checking preconditions for Pick_1"/>
+                <Action ID="CheckPredicate" predicate="robotAtLocation tiago table"/>
+                <Action ID="CheckPredicate" predicate="robotAtSurface tiago table_top"/>
+                <Action ID="CheckPredicate" predicate="surfaceInLocation table_top table"/>
+                <Action ID="CheckPredicate" predicate="objectOnSurface knife1 table_top"/>
+                <Action ID="CheckPredicate" predicate="handEmpty tiago"/>
+            </Sequence>
+            <SubTree ID="ReplanningBT" current_goal="objectOnSurface knife1 cupboard_bottom_shelf"/>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="ReplanningBT">
+        <Sequence name="Replanning_Sequence">
+            <PrintString msg="[DEBUG] Replanning triggered due to failure of a predicate"/>
+            <Action ID="CreateNewPddlProblem" success="{generate_pddl_problem_success}" problem_pddl="{problem_pddl}" goal="{current_goal}" domain_path="{domain_path}"/>
+            <PrintString msg="Generated PDDL Problem"/>
+            <PrintString msg="{problem_pddl}"/>
+            <!-- the path to the domain gets automatically added to the BTs -->
+            <Action ID="DownwardPlanner" problem="{problem_pddl}" domain_path="/home/users/oriol.ruiz/thesis/beaware-knowledge-repository/main_demo_knowledge/PDDL/main_demo_domain.pddl" plan="{task_plan}" response="{downward_planner_success}"/>
+            <PrintString msg="Configuring new execution"/>
+            <Action ID="NewExecutionConfiguration" task_plan="{task_plan}" output_bt_tag="FROM_CORE_BT" success="{new_execution_configuration_success}" bt_path="{bt_path}"/>
+            <PrintString msg="Executing the tree in:"/>
+            <PrintString msg="{bt_path}"/>
+            <Action ID="ExecuteBt" tree_path="{bt_path}"/>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Pick_1" _applied_flavor__1="flavor_slow_pick_for_dangerous_object" _applied_flavor__2="mrs_pick_shared_battery_precondition" _applied_flavor__3="mrs_pick_b1_visual_precondition" _applied_flavor__4="mrs_pick_b2_grasp_force_holdcondition">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="velocity:=1.0*0.5;grasp_style_param:=none;kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <SubTree ID="DetectObject_1_1" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+            
+            <SubTree ID="SelectTool_1_2" robot="{robot}" object="{object}"/>
+            
+            
+            <SubTree ID="ConfirmToolSelection_1_3" robot="{robot}" object="{object}"/>
+            
+            
+            <SubTree ID="CheckGripperReady_1_4" robot="{robot}"/>
+            
+            
+            <Sequence name="MAIN MRS of AttemptGrasp" v_highlight="true" v_color="cyan">
+                <Fallback name="PRC MRS of AttemptGrasp">
+                    <Sequence name="PRC COND AttemptGrasp">
+                        <Script code="ec_0:=0; ec_1:=0"/>
+                        <Action ID="CheckBatterySufficient" _onFailure="ec_0:=1"/>
+                        <Action ID="CheckDetectionConfidence" _onFailure="ec_1:=1"/>
+                    </Sequence>
+                    <Sequence name="PRC REC AttemptGrasp">
+                        <ForceFailure _skipIf="ec_0!=1">
+                            <Action ID="RechargeRobot"/>
+                        </ForceFailure>
+                        <Action ID="Reposition" _skipIf="ec_1!=1"/>
+                    </Sequence>
+                </Fallback>
+                <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+                <SubTree ID="AttemptGrasp_1_5" robot="{robot}" object="{object}" object_pose="{object_pose}" velocity="{velocity}" grasp_style_param="{grasp_style_param}" kinematic_restriction="{kinematic_restriction}"/>
+                
+            
+            </Sequence>
+            <SubTree ID="VerifyGrasp_1_6" robot="{robot}" object="{object}"/>
+            
+            
+            <Sequence name="MAIN MRS of LiftObject" v_highlight="true" v_color="cyan">
+                <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+                <Fallback name="HOC TERMINAL MRS of LiftObject">
+                    <Parallel name="HOC MRS of LiftObject" success_count="1" failure_count="1">
+                        <KeepRunningUntilFailure>
+                            <Fallback name="HOC MRS of LiftObject">
+                                <Sequence name="HOC COND LiftObject">
+                                    <Script code="ec_2:=0"/>
+                                    <Action ID="CheckGraspForce" _onFailure="ec_2:=1"/>
+                                </Sequence>
+                                <Sequence name="HOC REC LiftObject">
+                                    <Action ID="TightenGrip" _skipIf="ec_2!=1 || grasp_force_reading&gt;=5.0"/>
+                                    <ForceFailure _skipIf="ec_2!=1 || grasp_force_reading&lt;5.0">
+                                        <PrintString msg="[MRS] Terminal holdcondition recovery triggered for LiftObject; halting behavior before running recovery"/>
+                                    </ForceFailure>
+                                </Sequence>
+                            </Fallback>
+                        </KeepRunningUntilFailure>
+                        <SubTree ID="LiftObject_1_7" robot="{robot}" object="{object}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+                        
+        
+                    </Parallel>
+                    <Sequence name="HOC TERMINAL REC LiftObject">
+                        <ForceFailure _skipIf="ec_2!=1 || grasp_force_reading&lt;5.0">
+                            <Action ID="SignalGraspFailure"/>
+                        </ForceFailure>
+                    </Sequence>
+                </Fallback>
+            </Sequence>
+            <!--Modulated velocity by 0.5-->
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DetectObject_1_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Fallback>
+            
+            
+            <SubTree ID="LocalizeObject_1_1_1" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+            
+            <SubTree ID="ScanWorld_1_1_2" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+        
+        </Fallback>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="LocalizeObject_1_1_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="LocalizeObject" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ScanWorld_1_1_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="ScanWorld" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="SelectTool_1_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="SelectTool" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ConfirmToolSelection_1_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="ConfirmToolSelection" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="CheckGripperReady_1_4">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="CheckGripperReady" robot="{robot}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="AttemptGrasp_1_5">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="OpenGripper" robot="{robot}"/>
+            
+            
+            <SubTree ID="DetermineGrasp_1_5_1" robot="{robot}" object="{object}" object_pose="{object_pose}" grasp_style_param="{grasp_style_param}" grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}"/>
+            
+            
+            <SubTree ID="GoToPregrasp_1_5_2" robot="{robot}" pregrasp_pose="{pregrasp_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="GoToGrasp_1_5_3" robot="{robot}" grasp_pose="{grasp_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="GraspObject_1_5_4" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DetermineGrasp_1_5_1">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_grasp_pose="{grasp_pose}" _s_pregrasp_pose="{pregrasp_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="DetermineGrasp" robot="{robot}" object="{object}" object_pose="{object_pose}" grasp_style_param="{grasp_style_param}" grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToPregrasp_1_5_2">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_pregrasp_pose="{pregrasp_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{pregrasp_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToGrasp_1_5_3">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_grasp_pose="{grasp_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{grasp_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GraspObject_1_5_4" _applied_flavor__5="mrs_pick_b3_adaptive_grip_retry">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="max_grip_force:=40.0"/>
+                
+            
+            </Sequence>
+            
+            
+            <Sequence name="MAIN MRS of CloseGripper" v_highlight="true" v_color="cyan">
+                <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_pose="{object_pose}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+                <RetryUntilSuccessful name="Param-Adaptive Retry CloseGripper" num_attempts="3">
+                    <Fallback name="Param-Adaptive Fallback CloseGripper">
+                        <Action ID="CloseGripper" robot="{robot}" object="{object}" pose="{object_pose}"/>
+                        
+        
+                        <ForceFailure>
+                            <Script code="grip_force:=grip_force+10.0"/>
+                        </ForceFailure>
+                    </Fallback>
+                </RetryUntilSuccessful>
+            </Sequence>
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="VerifyGrasp_1_6">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            <Action ID="VerifyGrasp" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="LiftObject_1_7">
+        <Seed ID="" v_edge="dashed" _s_robot="tiago" _s_object="knife1" _s_location="table" _s_surface="table_top" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_available="true" _cm_dangerous_object_handling="true" _cm_force_sensor_available="true"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="lift" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <!--18:30:13-->
+</root>

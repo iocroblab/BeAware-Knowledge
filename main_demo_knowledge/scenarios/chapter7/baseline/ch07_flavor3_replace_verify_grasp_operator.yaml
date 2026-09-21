@@ -1,0 +1,24 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 3 (ReplaceAbyB) isolated,
+# Trigger-true Seed (bundles the operatorPresent override below). Requires
+# ch07_extra_pick_behaviors.yaml. See ch07_flavor3_only_no_override.yaml for
+# the Trigger-false Seed, and ../README.md.
+
+individuals:
+
+  - name: flavor_replace_verify_grasp_with_operator_confirm
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace VerifyGrasp with OperatorConfirmGrasp inside Pick when a human operator is present (operatorPresent world_state fact), having the operator visually confirm the grasp instead of an automated check."
+      isFlavorOf: b_pick
+      hasTargetBehaviorA: b_verify_grasp
+      hasTargetBehaviorB: b_operator_confirm_grasp
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"
+
+  # Overrides operatorPresent (false in the base ontology) to true so the
+  # Trigger above fires. clear_properties is required since updates
+  # otherwise only append.
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true

@@ -1,0 +1,13 @@
+# Ch07 Baseline Flavor-Configuration Timing: adds book1, a plain
+# ManipulationObject that is Trigger-false for all 9 showcase Flavors at once
+# (no Glass/Knife/Can/SmallObject class, weight below the 0.3 kg HeavyObject
+# threshold, no hasMaterial). See ../README.md.
+
+individuals:
+
+  - name: book1
+    individual_classes: ["ManipulationObject"]
+    property_dictionary:
+      objectOnSurface: table_top
+      hasColor: brown
+      hasWeight: 0.2

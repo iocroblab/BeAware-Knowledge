@@ -1,0 +1,30 @@
+# Ch07 Context Mode Query-Reduction Scaling: defines the 3 Context Modes used
+# across this experiment (see ../README.md), one per activation mechanism.
+
+
+individuals:
+
+  - name: cm_dangerous_object_handling
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Acceptable Risk: active whenever the manipulated object is a DangerousObject. SPARQL Trigger activation mechanism."
+      isContextModeOf: b_pick
+      hasContextTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  - name: cm_operator_supervised
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "Workspace Conditions: active whenever a human operator is present (operatorPresent world-state fact). Expected-PDDL-State activation mechanism."
+      isContextModeOf: b_pick
+      hasContextTrigger: "PDDL:operatorPresent"
+
+  - name: cm_low_battery_mode
+    individual_classes: ["ContextMode"]
+    property_dictionary:
+      description: "User Preference (favor energy saving over speed): active whenever the acting robot's hasBattery is below 65. Ontology-state activation mechanism, SWRL-inferred (see rules: block below). Normally isContextModeOf b_navigate only (main_demo_context_modes.yaml); also declared here for b_pick so a single Pick task-plan step can exercise all 3 groups in this experiment without needing a 2-Behavior task plan."
+      isContextModeOf: [b_navigate, b_pick]
+
+rules:
+  - rule: "Robot(?r) ^ hasBattery(?r,?b) ^ lessThan(?b,65.0) -> contextModeIsActive(cm_low_battery_mode,true)"
+    associated_properties_to_clear:
+      - contextModeIsActive

@@ -1,0 +1,30 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group B alone, Context-Mode-
+# gated arm. Must be loaded alongside ch07_groupb_cm_only.yaml (defines only
+# cm_low_battery_mode). See ../README.md.
+
+individuals:
+
+  - name: tiago
+    individual_classes: ["Robot"]
+    clear_properties:
+      - hasBattery
+    property_dictionary:
+      hasBattery: 40.0
+
+  - name: flavor_qr2_b1_low_battery_reserve
+    individual_classes: ["FixParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group B 1/2, alone: gated by cm_low_battery_mode, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_low_battery_mode
+      hasParamTarget: battery_reserve_threshold
+      hasNewValue: "15.0"
+
+  - name: flavor_qr2_b2_low_battery_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group B 2/2, alone: gated by cm_low_battery_mode, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_low_battery_mode
+      hasParamTarget: velocity
+      hasPercentageModifier: -20

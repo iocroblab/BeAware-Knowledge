@@ -1,0 +1,14 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 3 (ReplaceAbyB) isolated,
+# Trigger-false Seed (operatorPresent left at its default false). Requires
+# ch07_extra_pick_behaviors.yaml. See ../README.md.
+
+individuals:
+
+  - name: flavor_replace_verify_grasp_with_operator_confirm
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace VerifyGrasp with OperatorConfirmGrasp inside Pick when a human operator is present (operatorPresent world_state fact), having the operator visually confirm the grasp instead of an automated check."
+      isFlavorOf: b_pick
+      hasTargetBehaviorA: b_verify_grasp
+      hasTargetBehaviorB: b_operator_confirm_grasp
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"

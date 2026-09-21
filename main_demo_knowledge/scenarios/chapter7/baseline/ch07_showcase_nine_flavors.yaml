@@ -1,0 +1,115 @@
+# Ch07 Baseline Flavor-Configuration Timing: all 9 showcase Flavors combined,
+# used for the Group 3 (Flavors 1-9) rows. Requires
+# ch07_extra_pick_behaviors.yaml. See ../README.md.
+
+individuals:
+
+  # --- 1: ModulateParameter (unchanged) ---------------------------------------------
+
+  - name: flavor_slow_pick_for_dangerous_object
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Reduce Pick's arm velocity by 50% when the manipulated object is a DangerousObject (e.g. knife1)."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:DangerousObject }"
+
+  # --- 2: AddKinematicRestriction (retargeted to LiquidContainer) -------------------
+
+  - name: flavor_add_kinematic_restriction_upright_for_liquid_container
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "AddKinematicRestriction (subclass of FixParameter with hasParamTarget fixed to 'kinematic_restriction'): keep LiquidContainer objects (e.g. glass1) upright while LiftObject is executed, so their contents are not spilled."
+      isFlavorOf: b_lift_object
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:LiquidContainer }"
+
+  # --- 3: ReplaceAbyB, VerifyGrasp -> OperatorConfirmGrasp (redesigned) -------------
+
+  - name: flavor_replace_verify_grasp_with_operator_confirm
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace VerifyGrasp with OperatorConfirmGrasp inside Pick when a human operator is present (operatorPresent world_state fact), having the operator visually confirm the grasp instead of an automated check."
+      isFlavorOf: b_pick
+      hasTargetBehaviorA: b_verify_grasp
+      hasTargetBehaviorB: b_operator_confirm_grasp
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"
+
+  # Overrides operatorPresent (declared false in main_demo_ontology.owl) to true on the
+  # shared world_state individual, so the Trigger above actually fires. Needs
+  # clear_properties since add_new_individual_to_ontology only ever appends to existing
+  # property values otherwise.
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true
+
+  # --- 4: ReplaceAbyB (unchanged) ----------------------------------------------------
+
+  - name: flavor_replace_grasp_for_heavy_object
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace GraspObject with a reinforced two-stage grasp (GraspObjectReinforced) inside AttemptGrasp when the manipulated object is a HeavyObject (hasWeight > 0.3 kg, e.g. can1)."
+      isFlavorOf: b_attempt_grasp
+      hasTargetBehaviorA: b_grasp_object
+      hasTargetBehaviorB: b_grasp_object_reinforced
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:HeavyObject }"
+
+  # --- 5: ReplaceByParam, SelectTool -> material-based query (redesigned) ----------
+
+  - name: flavor_select_tool_by_material_query
+    individual_classes: ["ReplaceByParam"]
+    property_dictionary:
+      description: "Replace SelectTool inside Pick with a directly-queried grasp-style parameter, resolved from the manipulated object's hasMaterial value (e.g. 'glass' for glass1/glass2), instead of a generic tool-selection step."
+      isFlavorOf: b_pick
+      hasTargetBehavior: b_select_tool
+      replacedByParam: grasp_style_param
+      obtainsParamValuewithQuery: "SELECT ?v WHERE { <object> onto:hasMaterial ?v }"
+      hasTrigger: "ASK WHERE { <object> onto:hasMaterial ?mat }"
+
+  # --- 6: DelayAUntilAfterB (unchanged) ---------------------------------------------
+
+  - name: flavor_delay_verify_grasp_until_after_lift_for_suction_gripper
+    individual_classes: ["DelayAUntilAfterB"]
+    property_dictionary:
+      description: "Delay VerifyGrasp inside Pick until after LiftObject when the acting robot has a SuctionGripper (e.g. madar), since a failed vacuum grasp is immediately detectable once LiftObject starts, so verifying grasp beforehand is redundant."
+      isFlavorOf: b_pick
+      hasTargetBehaviorA: b_verify_grasp
+      hasTargetBehaviorB: b_lift_object
+      hasTrigger: "ASK WHERE { <robot> onto:hasGripper ?g . ?g rdf:type onto:SuctionGripper }"
+
+  # --- 7: ReplaceAbyB, OpenGripper -> DeactivateSuction on Place (redesigned) -------
+
+  - name: flavor_replace_open_gripper_with_deactivate_suction
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace OpenGripper with DeactivateSuction inside ReleaseObject (Place) when the acting robot has a SuctionGripper (e.g. madar), since a vacuum end-effector releases objects by deactivating suction rather than opening a parallel-jaw gripper."
+      isFlavorOf: b_release_object
+      hasTargetBehaviorA: p_open_gripper
+      hasTargetBehaviorB: p_deactivate_suction
+      hasTrigger: "ASK WHERE { <robot> onto:hasGripper ?g . ?g rdf:type onto:SuctionGripper }"
+
+  # --- 8: Ignore, LocalizeObject skipped for SmallObject (redesigned) ---------------
+
+  - name: flavor_ignore_localize_object_for_small_object
+    individual_classes: ["Ignore"]
+    property_dictionary:
+      description: "Skip the LocalizeObject branch of DetectObject's Fallback when the manipulated object is a SmallObject (e.g. bolt1), forcing a full ScanWorld unconditionally, since a lightweight localization attempt is not worth it for objects this small."
+      isFlavorOf: b_detect_object
+      hasTargetBehavior: b_localize_object
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:SmallObject }"
+
+  # --- 9: AddBtoA, pause before release for FragileObject on Place (redesigned) ----
+
+  - name: flavor_add_pause_before_release_for_fragile_object
+    individual_classes: ["AddBtoA"]
+    property_dictionary:
+      description: "Insert a brief pause immediately after GoToPlacement (right before ReleaseObject) inside Place when the manipulated object is a FragileObject (e.g. glass1), giving its placement pose a moment to settle before the gripper opens."
+      isFlavorOf: b_place
+      hasTargetBehaviorA: b_go_to_placement
+      hasTargetBehaviorB: p_pause_before_release
+      hasDecorator: Sequence
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:FragileObject }"

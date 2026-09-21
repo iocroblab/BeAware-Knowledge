@@ -1,0 +1,27 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group C (operator present,
+# Expected-PDDL-State) alone, own-Trigger arm. See ../README.md.
+
+individuals:
+
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true
+
+  - name: flavor_qr2_c1_skip_detect_operator_present
+    individual_classes: ["Ignore"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group C (Expected-PDDL-State/operatorPresent) 1/2, alone: skip DetectObject when a human operator is present."
+      isFlavorOf: b_pick
+      hasTargetBehavior: b_detect_object
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"
+
+  - name: flavor_qr2_c2_operator_present_slow_grasp
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, own-Trigger arm, Group C (Expected-PDDL-State/operatorPresent) 2/2, alone: reduce Pick's velocity by 20% for extra caution when a human operator is present."
+      isFlavorOf: b_pick
+      hasParamTarget: velocity
+      hasPercentageModifier: -20
+      hasTrigger: "ASK WHERE { onto:world_state onto:operatorPresent true }"

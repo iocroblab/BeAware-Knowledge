@@ -1,0 +1,16 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 6 (DelayAUntilAfterB)
+# isolated, triggered by the acting robot's gripper type (SuctionGripper)
+# rather than "safe object", so it can coexist with Flavors 1/2/8 (whose
+# Triggers are DangerousObject/FragileObject-based) in the combined-group
+# scenarios. Requires ch07_extra_pick_behaviors.yaml. See ../README.md.
+
+individuals:
+
+  - name: flavor_delay_verify_grasp_until_after_lift_for_suction_gripper
+    individual_classes: ["DelayAUntilAfterB"]
+    property_dictionary:
+      description: "Delay VerifyGrasp inside Pick until after LiftObject when the acting robot has a SuctionGripper (e.g. madar), since a failed vacuum grasp is immediately detectable once LiftObject starts, so verifying grasp beforehand is redundant."
+      isFlavorOf: b_pick
+      hasTargetBehaviorA: b_verify_grasp
+      hasTargetBehaviorB: b_lift_object
+      hasTrigger: "ASK WHERE { <robot> onto:hasGripper ?g . ?g rdf:type onto:SuctionGripper }"

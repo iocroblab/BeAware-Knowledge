@@ -1,0 +1,318 @@
+<?xml version="1.0" ?>
+<root BTCPP_format="4" main_tree_to_execute="ec_tree" time_of_generation="18:30:12">
+    <BehaviorTree ID="ec_tree">
+        <Sequence name="Main Sequence">
+            <SubTree ID="Execution Tree"/>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Execution Tree">
+        <Sequence name="Task Plan Sequence">
+            <Sequence name="PDDLConditionTree_Pick_1">
+                <SubTree ID="Preconditions_BT_Pick_1"/>
+                <SubTree ID="Pick_1" robot="madar" object="glass1" location="table" surface="table_top"/>
+            </Sequence>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Preconditions_BT_Pick_1">
+        <Fallback name="Pick_1_PreconditionFallback">
+            <Sequence name="Pick_1_Preconditions">
+                <PrintString msg="[DEBUG] ************* Checking preconditions for Pick_1"/>
+                <Action ID="CheckPredicate" predicate="robotAtLocation madar table"/>
+                <Action ID="CheckPredicate" predicate="robotAtSurface madar table_top"/>
+                <Action ID="CheckPredicate" predicate="surfaceInLocation table_top table"/>
+                <Action ID="CheckPredicate" predicate="objectOnSurface glass1 table_top"/>
+                <Action ID="CheckPredicate" predicate="handEmpty madar"/>
+            </Sequence>
+            <SubTree ID="ReplanningBT" current_goal="objectOnSurface glass1 cupboard_bottom_shelf"/>
+        </Fallback>
+    </BehaviorTree>
+    <BehaviorTree ID="ReplanningBT">
+        <Sequence name="Replanning_Sequence">
+            <PrintString msg="[DEBUG] Replanning triggered due to failure of a predicate"/>
+            <Action ID="CreateNewPddlProblem" success="{generate_pddl_problem_success}" problem_pddl="{problem_pddl}" goal="{current_goal}" domain_path="{domain_path}"/>
+            <PrintString msg="Generated PDDL Problem"/>
+            <PrintString msg="{problem_pddl}"/>
+            <!-- the path to the domain gets automatically added to the BTs -->
+            <Action ID="DownwardPlanner" problem="{problem_pddl}" domain_path="/home/users/oriol.ruiz/thesis/beaware-knowledge-repository/main_demo_knowledge/PDDL/main_demo_domain.pddl" plan="{task_plan}" response="{downward_planner_success}"/>
+            <PrintString msg="Configuring new execution"/>
+            <Action ID="NewExecutionConfiguration" task_plan="{task_plan}" output_bt_tag="FROM_CORE_BT" success="{new_execution_configuration_success}" bt_path="{bt_path}"/>
+            <PrintString msg="Executing the tree in:"/>
+            <PrintString msg="{bt_path}"/>
+            <Action ID="ExecuteBt" tree_path="{bt_path}"/>
+        </Sequence>
+    </BehaviorTree>
+    <BehaviorTree ID="Pick_1" _applied_flavor__1="flavor_add_kinematic_restriction_upright_for_liquid_container" _applied_flavor__2="flavor_replace_gripper_check_with_suction_check" _applied_flavor__3="mrs_pick_shared_battery_precondition" _applied_flavor__4="mrs_pick_a1_proximity_precondition" _applied_flavor__5="mrs_pick_a3_upright_holdcondition" _applied_flavor__6="mrs_pick_a4_vacuum_weight_postcondition">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="velocity:=1.0;grasp_style_param:=none;kinematic_restriction:=upright"/>
+                
+            
+            </Sequence>
+            
+            
+            <SubTree ID="DetectObject_1_1" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+            
+            <SubTree ID="SelectTool_1_2" robot="{robot}" object="{object}"/>
+            
+            
+            <SubTree ID="ConfirmToolSelection_1_3" robot="{robot}" object="{object}"/>
+            
+            
+            <Action ID="CheckSuctionReady" _old_id="CheckGripperReady"/>
+            <Sequence name="MAIN MRS of AttemptGrasp" v_highlight="true" v_color="cyan">
+                <Fallback name="PRC MRS of AttemptGrasp">
+                    <Sequence name="PRC COND AttemptGrasp">
+                        <Script code="ec_0:=0; ec_1:=0"/>
+                        <Action ID="CheckBatterySufficient" _onFailure="ec_0:=1"/>
+                        <Action ID="CheckObjectPresenceProximity" _onFailure="ec_1:=1"/>
+                    </Sequence>
+                    <Sequence name="PRC REC AttemptGrasp">
+                        <ForceFailure _skipIf="ec_0!=1">
+                            <Action ID="RechargeRobot"/>
+                        </ForceFailure>
+                        <Action ID="Reposition" _skipIf="ec_1!=1"/>
+                    </Sequence>
+                </Fallback>
+                <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+                <SubTree ID="AttemptGrasp_1_4" robot="{robot}" object="{object}" object_pose="{object_pose}" velocity="{velocity}" grasp_style_param="{grasp_style_param}" kinematic_restriction="{kinematic_restriction}"/>
+                
+            
+            </Sequence>
+            <SubTree ID="VerifyGrasp_1_5" robot="{robot}" object="{object}"/>
+            
+            
+            <Sequence name="MAIN MRS of LiftObject" v_highlight="true" v_color="cyan">
+                <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+                <Fallback name="HOC TERMINAL MRS of LiftObject">
+                    <Parallel name="HOC MRS of LiftObject" success_count="1" failure_count="1">
+                        <KeepRunningUntilFailure>
+                            <Fallback name="HOC MRS of LiftObject">
+                                <Sequence name="HOC COND LiftObject">
+                                    <Script code="ec_2:=0"/>
+                                    <Action ID="CheckObjectTiltAngle" _onFailure="ec_2:=1"/>
+                                </Sequence>
+                                <Sequence name="HOC REC LiftObject">
+                                    <ForceFailure _skipIf="ec_2!=1">
+                                        <PrintString msg="[MRS] Terminal holdcondition recovery triggered for LiftObject; halting behavior before running recovery"/>
+                                    </ForceFailure>
+                                </Sequence>
+                            </Fallback>
+                        </KeepRunningUntilFailure>
+                        <SubTree ID="LiftObject_1_6" robot="{robot}" object="{object}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+                        
+        
+                    </Parallel>
+                    <Sequence name="HOC TERMINAL REC LiftObject">
+                        <ForceFailure _skipIf="ec_2!=1">
+                            <Action ID="CleanArea"/>
+                        </ForceFailure>
+                    </Sequence>
+                </Fallback>
+                <Fallback name="POC MRS of LiftObject">
+                    <Sequence name="POC COND LiftObject">
+                        <Script code="ec_3:=0; ec_4:=0; ec_5:=0"/>
+                        <Action ID="CheckVacuumPressure" _onFailure="ec_4:=1; ec_3:=1"/>
+                        <Action ID="CheckObjectWeightConsistent" _onFailure="ec_5:=1; ec_3:=1"/>
+                    </Sequence>
+                    <Sequence name="POC REC LiftObject">
+                        <Action ID="Reposition" _skipIf="ec_3!=1"/>
+                    </Sequence>
+                </Fallback>
+            </Sequence>
+            <!--*Gave parameter kinematic_restriction new value upright AAAA-->
+            <!--Gave parameter kinematic_restriction new value upright-->
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DetectObject_1_1">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Fallback>
+            
+            
+            <SubTree ID="LocalizeObject_1_1_1" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+            
+            <SubTree ID="ScanWorld_1_1_2" robot="{robot}" object="{object}" object_pose="{object_pose}"/>
+            
+        
+        </Fallback>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="LocalizeObject_1_1_1">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="LocalizeObject" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ScanWorld_1_1_2">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="ScanWorld" robot="{robot}" object="{object}" pose="{object_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="SelectTool_1_2">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="SelectTool" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="ConfirmToolSelection_1_3">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="ConfirmToolSelection" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="AttemptGrasp_1_4" _applied_flavor__7="flavor_use_suction_activation_for_suction_gripper">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="OpenGripper" robot="{robot}"/>
+            
+            
+            <SubTree ID="DetermineGrasp_1_4_1" robot="{robot}" object="{object}" object_pose="{object_pose}" grasp_style_param="{grasp_style_param}" grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}"/>
+            
+            
+            <SubTree ID="GoToPregrasp_1_4_2" robot="{robot}" pregrasp_pose="{pregrasp_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="GoToGrasp_1_4_3" robot="{robot}" grasp_pose="{grasp_pose}" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+            
+            <SubTree ID="GraspObjectSuction_1_4_4" _old_id="GraspObject"/>
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="DetermineGrasp_1_4_1">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_grasp_pose="{grasp_pose}" _s_pregrasp_pose="{pregrasp_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="DetermineGrasp" robot="{robot}" object="{object}" object_pose="{object_pose}" grasp_style_param="{grasp_style_param}" grasp_pose="{grasp_pose}" pregrasp_pose="{pregrasp_pose}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToPregrasp_1_4_2">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_pregrasp_pose="{pregrasp_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{pregrasp_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GoToGrasp_1_4_3">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_grasp_pose="{grasp_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="{grasp_pose}" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="GraspObjectSuction_1_4_4" _applied_flavor__8="mrs_pick_a2_suction_retry">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Sequence name="MAIN MRS of ActivateSuction" v_highlight="true" v_color="cyan">
+                <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_object_pose="{object_pose}" _s_velocity="{velocity}" _s_grasp_style_param="{grasp_style_param}" _s_kinematic_restriction="{kinematic_restriction}" _s_pose="{object_pose}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+                <Fallback name="Retry Fallback ActivateSuction">
+                    <ForceFailure>
+                        <Script code="mrs_pick_a2_suction_retry_retry_count:=1"/>
+                    </ForceFailure>
+                    <RetryUntilSuccessful name="Retry ActivateSuction" num_attempts="2">
+                        <Sequence _post="mrs_pick_a2_suction_retry_retry_count=mrs_pick_a2_suction_retry_retry_count+1">
+                            <Action ID="PrintMsg" message1="Attempt"/>
+                            <Action ID="PrintInt" message1="{mrs_pick_a2_suction_retry_retry_count}"/>
+                            <Action ID="ActivateSuction" robot="{robot}" object="{object}" pose="{object_pose}"/>
+                            
+        
+                        </Sequence>
+                    </RetryUntilSuccessful>
+                    <Action ID="Reposition"/>
+                </Fallback>
+            </Sequence>
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="VerifyGrasp_1_5">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            <Action ID="VerifyGrasp" robot="{robot}" object="{object}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <BehaviorTree ID="LiftObject_1_6">
+        <Seed ID="" v_edge="dashed" _s_robot="madar" _s_object="glass1" _s_location="table" _s_surface="table_top" _s_velocity="{velocity}" _s_kinematic_restriction="{kinematic_restriction}" _cm_camera_unavailable="true" _cm_suction_gripper_handling="true"/>
+        <Sequence>
+            
+            
+            
+            <Sequence name="Setup Parameters">
+                
+                
+                <Script code="kinematic_restriction:=none"/>
+                
+            
+            </Sequence>
+            
+            
+            <Action ID="MoveArmToPose" robot="{robot}" target_pose="lift" offset="none" velocity="{velocity}" kinematic_restriction="{kinematic_restriction}"/>
+            
+        
+        </Sequence>
+        
+    
+    </BehaviorTree>
+    <!--18:30:12-->
+</root>

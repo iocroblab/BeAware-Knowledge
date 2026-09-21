@@ -1,0 +1,23 @@
+# Ch07 Context Mode Query-Reduction Scaling: Group A alone, Context-Mode-
+# gated arm. Must be loaded alongside ch07_groupa_cm_only.yaml (defines only
+# cm_dangerous_object_handling). See ../README.md.
+
+individuals:
+
+  - name: flavor_qr2_a1_dangerous_object_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group A 1/2, alone: gated by cm_dangerous_object_handling, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_dangerous_object_handling
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+
+  - name: flavor_qr2_a2_dangerous_object_lift_restriction
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group A 2/2, alone: gated by cm_dangerous_object_handling, no residual Trigger."
+      isFlavorOf: b_lift_object
+      isFlavorInMode: cm_dangerous_object_handling
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"

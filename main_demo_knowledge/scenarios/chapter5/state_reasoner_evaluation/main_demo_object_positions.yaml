@@ -1,0 +1,41 @@
+# Ch05 State Reasoner Evaluation: adds raw position coordinates to
+# glass1/knife1/can1 and the geometric SWRL rule that re-derives
+# objectOnSurface from them. See ../README.md.
+
+individuals:
+
+  - name: glass1
+    individual_classes: ["Glass"]
+    property_dictionary:
+      hasPositionX: 0.55
+      hasPositionY: 0.10
+      hasPositionZ: 0.78
+
+  - name: knife1
+    individual_classes: ["Knife"]
+    property_dictionary:
+      hasPositionX: 0.65
+      hasPositionY: -0.05
+      hasPositionZ: 0.77
+
+  - name: can1
+    individual_classes: ["Can"]
+    property_dictionary:
+      hasPositionX: 0.75
+      hasPositionY: 0.15
+      hasPositionZ: 0.78
+
+# Geometric counterpart of the manually-asserted objectOnSurface facts; see
+# ../README.md for the associated_properties_to_clear mechanism.
+rules:
+  - rule: >-
+      ManipulationObject(?o) ^ hasPositionX(?o,?x) ^ hasPositionY(?o,?y) ^ hasPositionZ(?o,?z) ^
+      Surface(?s) ^ hasBBoxMinX(?s,?minx) ^ hasBBoxMaxX(?s,?maxx) ^
+      hasBBoxMinY(?s,?miny) ^ hasBBoxMaxY(?s,?maxy) ^
+      hasBBoxMinZ(?s,?minz) ^ hasBBoxMaxZ(?s,?maxz) ^
+      greaterThanOrEqual(?x,?minx) ^ lessThanOrEqual(?x,?maxx) ^
+      greaterThanOrEqual(?y,?miny) ^ lessThanOrEqual(?y,?maxy) ^
+      greaterThanOrEqual(?z,?minz) ^ lessThanOrEqual(?z,?maxz)
+      -> objectOnSurface(?o,?s)
+    associated_properties_to_clear:
+      - objectOnSurface

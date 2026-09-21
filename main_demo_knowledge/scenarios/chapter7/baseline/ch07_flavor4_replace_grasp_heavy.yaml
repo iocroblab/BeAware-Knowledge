@@ -1,0 +1,13 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 4 (ReplaceAbyB) isolated.
+# Requires ch07_extra_pick_behaviors.yaml. See ../README.md.
+
+individuals:
+
+  - name: flavor_replace_grasp_for_heavy_object
+    individual_classes: ["ReplaceAbyB"]
+    property_dictionary:
+      description: "Replace GraspObject with a reinforced two-stage grasp (GraspObjectReinforced) inside AttemptGrasp when the manipulated object is a HeavyObject (hasWeight > 0.3 kg, e.g. can1)."
+      isFlavorOf: b_attempt_grasp
+      hasTargetBehaviorA: b_grasp_object
+      hasTargetBehaviorB: b_grasp_object_reinforced
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:HeavyObject }"

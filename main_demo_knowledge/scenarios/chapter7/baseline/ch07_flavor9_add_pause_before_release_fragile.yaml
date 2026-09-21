@@ -1,0 +1,14 @@
+# Ch07 Baseline Flavor-Configuration Timing: Flavor 9 (AddBtoA) isolated.
+# See ../README.md.
+
+individuals:
+
+  - name: flavor_add_pause_before_release_for_fragile_object
+    individual_classes: ["AddBtoA"]
+    property_dictionary:
+      description: "Insert a brief pause immediately after GoToPlacement (right before ReleaseObject) inside Place when the manipulated object is a FragileObject (e.g. glass1), giving its placement pose a moment to settle before the gripper opens."
+      isFlavorOf: b_place
+      hasTargetBehaviorA: b_go_to_placement
+      hasTargetBehaviorB: p_pause_before_release
+      hasDecorator: Sequence
+      hasTrigger: "ASK WHERE { <object> rdf:type/rdfs:subClassOf* onto:FragileObject }"

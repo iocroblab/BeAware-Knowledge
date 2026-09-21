@@ -1,0 +1,79 @@
+# Ch07 Context Mode Query-Reduction Scaling: Context-Mode-gated arm. Same 6
+# Flavors as ch07_cm_grouping_own_trigger_n6.yaml, each gated by its group's
+# Context Mode (isFlavorInMode) with no residual hasTrigger of its own.
+# Requires ch07_extra_pick_behaviors.yaml and
+# ch07_cm_grouping_three_modes.yaml. See ../README.md.
+#
+# tiago's hasBattery and world_state's operatorPresent are overridden
+# exactly as in the own-Trigger arm.
+
+individuals:
+
+  - name: tiago
+    individual_classes: ["Robot"]
+    clear_properties:
+      - hasBattery
+    property_dictionary:
+      hasBattery: 40.0
+
+  - name: world_state
+    individual_classes: ["WorldState"]
+    clear_properties: ["operatorPresent"]
+    property_dictionary:
+      operatorPresent: true
+
+  # --- Group A (SPARQL): cm_dangerous_object_handling ---
+  - name: flavor_qr2_a1_dangerous_object_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group A 1/2: gated by cm_dangerous_object_handling, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_dangerous_object_handling
+      hasParamTarget: velocity
+      hasPercentageModifier: -50
+
+  - name: flavor_qr2_a2_dangerous_object_lift_restriction
+    individual_classes: ["AddKinematicRestriction"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group A 2/2: gated by cm_dangerous_object_handling, no residual Trigger."
+      isFlavorOf: b_lift_object
+      isFlavorInMode: cm_dangerous_object_handling
+      hasParamTarget: kinematic_restriction
+      hasNewValue: "upright"
+
+  # --- Group B (ontology-state/SWRL): cm_low_battery_mode ---
+  - name: flavor_qr2_b1_low_battery_reserve
+    individual_classes: ["FixParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group B 1/2: gated by cm_low_battery_mode, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_low_battery_mode
+      hasParamTarget: battery_reserve_threshold
+      hasNewValue: "15.0"
+
+  - name: flavor_qr2_b2_low_battery_slow_pick
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group B 2/2: gated by cm_low_battery_mode, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_low_battery_mode
+      hasParamTarget: velocity
+      hasPercentageModifier: -20
+
+  # --- Group C (Expected-PDDL-State): cm_operator_supervised ---
+  - name: flavor_qr2_c1_skip_detect_operator_present
+    individual_classes: ["Ignore"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group C 1/2: gated by cm_operator_supervised, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_operator_supervised
+      hasTargetBehavior: b_detect_object
+
+  - name: flavor_qr2_c2_operator_present_slow_grasp
+    individual_classes: ["ModulateParameter"]
+    property_dictionary:
+      description: "Ch07 Context-Mode grouping experiment, CM-gated arm, Group C 2/2: gated by cm_operator_supervised, no residual Trigger."
+      isFlavorOf: b_pick
+      isFlavorInMode: cm_operator_supervised
+      hasParamTarget: velocity
+      hasPercentageModifier: -20
